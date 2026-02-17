@@ -1,0 +1,4 @@
+- name: Restart grafana
+  ansible.builtin.docker_container:
+    name: grafana
+    restart: true

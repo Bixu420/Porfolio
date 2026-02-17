@@ -1,0 +1,6241 @@
+Mon Dec 15 13:27:39 UTC 2025
++ hostname
+Janek
++ ansible-playbook infra.yaml --diff
+[WARNING]: While constructing a mapping from
+/home/bixu/ica0002/roles/mysql/tasks/main.yaml, line 52, column 3, found a
+duplicate dict key (notify). Using last defined value only.
+[WARNING]: While constructing a mapping from
+/home/bixu/ica0002/roles/mysql/tasks/main.yaml, line 132, column 3, found a
+duplicate dict key (notify). Using last defined value only.
+
+PLAY [Initial setup] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Platform linux on host bixu420-3 is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host bixu420-1 is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host bixu420-2 is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Update APT cache] *************************************************
+changed: [bixu420-3]
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [init : Install prometheus node exporter] *********************************
+The following additional packages will be installed:
+  freeipmi-common ipmitool libfreeipmi17 libio-pty-perl libipc-run-perl
+  libopenipmi0t64 libsnmp-base libsnmp40t64 libtime-duration-perl
+  libtimedate-perl moreutils nvme-cli openipmi
+  prometheus-node-exporter-collectors python3-decorator
+  python3-prometheus-client smartmontools
+Suggested packages:
+  freeipmi-tools snmp-mibs-downloader gsmartcontrol smart-notifier mailx
+  | mailutils
+The following NEW packages will be installed:
+  freeipmi-common ipmitool libfreeipmi17 libio-pty-perl libipc-run-perl
+  libopenipmi0t64 libsnmp-base libsnmp40t64 libtime-duration-perl
+  libtimedate-perl moreutils nvme-cli openipmi prometheus-node-exporter
+  prometheus-node-exporter-collectors python3-decorator
+  python3-prometheus-client smartmontools
+0 upgraded, 18 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-1]
+The following additional packages will be installed:
+  freeipmi-common ipmitool libfreeipmi17 libio-pty-perl libipc-run-perl
+  libopenipmi0t64 libsnmp-base libsnmp40t64 libtime-duration-perl
+  libtimedate-perl moreutils nvme-cli openipmi
+  prometheus-node-exporter-collectors python3-decorator
+  python3-prometheus-client smartmontools
+Suggested packages:
+  freeipmi-tools snmp-mibs-downloader gsmartcontrol smart-notifier mailx
+  | mailutils
+The following NEW packages will be installed:
+  freeipmi-common ipmitool libfreeipmi17 libio-pty-perl libipc-run-perl
+  libopenipmi0t64 libsnmp-base libsnmp40t64 libtime-duration-perl
+  libtimedate-perl moreutils nvme-cli openipmi prometheus-node-exporter
+  prometheus-node-exporter-collectors python3-decorator
+  python3-prometheus-client smartmontools
+0 upgraded, 18 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-2]
+The following additional packages will be installed:
+  freeipmi-common ipmitool libfreeipmi17 libio-pty-perl libipc-run-perl
+  libopenipmi0t64 libsnmp-base libsnmp40t64 libtime-duration-perl
+  libtimedate-perl moreutils nvme-cli openipmi
+  prometheus-node-exporter-collectors python3-decorator
+  python3-prometheus-client smartmontools
+Suggested packages:
+  freeipmi-tools snmp-mibs-downloader gsmartcontrol smart-notifier mailx
+  | mailutils
+The following NEW packages will be installed:
+  freeipmi-common ipmitool libfreeipmi17 libio-pty-perl libipc-run-perl
+  libopenipmi0t64 libsnmp-base libsnmp40t64 libtime-duration-perl
+  libtimedate-perl moreutils nvme-cli openipmi prometheus-node-exporter
+  prometheus-node-exporter-collectors python3-decorator
+  python3-prometheus-client smartmontools
+0 upgraded, 18 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-3]
+
+TASK [init : Enable prometheus] ************************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Make directory for apt key] ***************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Add Grafana key] **************************************************
+changed: [bixu420-1]
+changed: [bixu420-3]
+changed: [bixu420-2]
+
+TASK [init : Add Grafana repository] *******************************************
+--- before: /dev/null
++++ after: /etc/apt/sources.list.d/packages_grafana_com_oss_deb.list
+@@ -0,0 +1 @@
++deb [signed-by=/etc/apt/keyrings/grafana.asc] https://packages.grafana.com/oss/deb stable main
+
+changed: [bixu420-3]
+--- before: /dev/null
++++ after: /etc/apt/sources.list.d/packages_grafana_com_oss_deb.list
+@@ -0,0 +1 @@
++deb [signed-by=/etc/apt/keyrings/grafana.asc] https://packages.grafana.com/oss/deb stable main
+
+changed: [bixu420-2]
+--- before: /dev/null
++++ after: /etc/apt/sources.list.d/packages_grafana_com_oss_deb.list
+@@ -0,0 +1 @@
++deb [signed-by=/etc/apt/keyrings/grafana.asc] https://packages.grafana.com/oss/deb stable main
+
+changed: [bixu420-1]
+
+TASK [init : promtail] *********************************************************
+The following NEW packages will be installed:
+  promtail
+0 upgraded, 1 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-3]
+The following NEW packages will be installed:
+  promtail
+0 upgraded, 1 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-1]
+The following NEW packages will be installed:
+  promtail
+0 upgraded, 1 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-2]
+
+TASK [init : Ensure Promtail is installed] *************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Ensure promtail system group exists] ******************************
+changed: [bixu420-3]
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [init : Ensure promtail system user exists] *******************************
+changed: [bixu420-1]
+changed: [bixu420-3]
+changed: [bixu420-2]
+
+TASK [init : Ensure Promtail data directory exists (persistent)] ***************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 988,
++    "owner": 110,
+     "path": "/var/lib/promtail",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-1]
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 988,
++    "owner": 110,
+     "path": "/var/lib/promtail",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-3]
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 988,
++    "owner": 110,
+     "path": "/var/lib/promtail",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-2]
+
+TASK [init : Ensure Promtail config is up to date] *****************************
+--- before: /etc/promtail/config.yml
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpa0nsy0o_/config.yaml.j2
+@@ -1,24 +1,64 @@
+-# This minimal config scrape only single log file.
+-# Primarily used in rpm/deb packaging where promtail service can be started during system init process.
+-# And too much scraping during init process can overload the complete system.
+-# https://github.com/grafana/loki/issues/11398
+-
+ server:
+   http_listen_port: 9080
+   grpc_listen_port: 0
+ 
++# Persist Promtail positions across reboots
+ positions:
+-  filename: /tmp/positions.yaml
++  filename: /var/lib/promtail/positions.yaml
+ 
+ clients:
+-- url: http://localhost:3100/loki/api/v1/push
++  - url: http://loki.bixu.io:3100/loki/api/v1/push
+ 
+ scrape_configs:
+-- job_name: system
+-  static_configs:
+-  - targets:
+-      - localhost
+-    labels:
+-      job: varlogs
+-      #NOTE: Need to be modified to scrape any additional logs of the system.
+-      __path__: /var/log/messages
++  - job_name: system-logs
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: syslog
++          hostname: bixu420-1
++          __path__: /var/log/syslog
++
++  - job_name: agama
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: agama
++          hostname: bixu420-1
++          __path__: /var/log/uwsgi/app/agama.log
++
++  - job_name: nginx-agama
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: nginx-agama
++          hostname: bixu420-1
++          __path__: /var/log/nginx/agama.log
++
++  - job_name: nginx-access
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: nginx-access
++          hostname: bixu420-1
++          __path__: /var/log/nginx/access.log
++
++  - job_name: nginx-error
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: nginx-error
++          hostname: bixu420-1
++          __path__: /var/log/nginx/error.log
++
++  - job_name: syslog
++    syslog:
++      listen_address: 0.0.0.0:8814
++      listen_protocol: tcp
++      labels:
++        job: haproxy
++        hostname: bixu420-1
+
+changed: [bixu420-1]
+--- before: /etc/promtail/config.yml
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpwqd3c1a5/config.yaml.j2
+@@ -1,24 +1,47 @@
+-# This minimal config scrape only single log file.
+-# Primarily used in rpm/deb packaging where promtail service can be started during system init process.
+-# And too much scraping during init process can overload the complete system.
+-# https://github.com/grafana/loki/issues/11398
+-
+ server:
+   http_listen_port: 9080
+   grpc_listen_port: 0
+ 
++# Persist Promtail positions across reboots
+ positions:
+-  filename: /tmp/positions.yaml
++  filename: /var/lib/promtail/positions.yaml
+ 
+ clients:
+-- url: http://localhost:3100/loki/api/v1/push
++  - url: http://loki.bixu.io:3100/loki/api/v1/push
+ 
+ scrape_configs:
+-- job_name: system
+-  static_configs:
+-  - targets:
+-      - localhost
+-    labels:
+-      job: varlogs
+-      #NOTE: Need to be modified to scrape any additional logs of the system.
+-      __path__: /var/log/messages
++  - job_name: system-logs
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: syslog
++          hostname: bixu420-3
++          __path__: /var/log/syslog
++
++
++  - job_name: nginx-access
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: nginx-access
++          hostname: bixu420-3
++          __path__: /var/log/nginx/access.log
++
++  - job_name: nginx-error
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: nginx-error
++          hostname: bixu420-3
++          __path__: /var/log/nginx/error.log
++
++  - job_name: syslog
++    syslog:
++      listen_address: 0.0.0.0:8814
++      listen_protocol: tcp
++      labels:
++        job: haproxy
++        hostname: bixu420-3
+
+changed: [bixu420-3]
+--- before: /etc/promtail/config.yml
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpqgflv1cw/config.yaml.j2
+@@ -1,24 +1,64 @@
+-# This minimal config scrape only single log file.
+-# Primarily used in rpm/deb packaging where promtail service can be started during system init process.
+-# And too much scraping during init process can overload the complete system.
+-# https://github.com/grafana/loki/issues/11398
+-
+ server:
+   http_listen_port: 9080
+   grpc_listen_port: 0
+ 
++# Persist Promtail positions across reboots
+ positions:
+-  filename: /tmp/positions.yaml
++  filename: /var/lib/promtail/positions.yaml
+ 
+ clients:
+-- url: http://localhost:3100/loki/api/v1/push
++  - url: http://loki.bixu.io:3100/loki/api/v1/push
+ 
+ scrape_configs:
+-- job_name: system
+-  static_configs:
+-  - targets:
+-      - localhost
+-    labels:
+-      job: varlogs
+-      #NOTE: Need to be modified to scrape any additional logs of the system.
+-      __path__: /var/log/messages
++  - job_name: system-logs
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: syslog
++          hostname: bixu420-2
++          __path__: /var/log/syslog
++
++  - job_name: agama
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: agama
++          hostname: bixu420-2
++          __path__: /var/log/uwsgi/app/agama.log
++
++  - job_name: nginx-agama
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: nginx-agama
++          hostname: bixu420-2
++          __path__: /var/log/nginx/agama.log
++
++  - job_name: nginx-access
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: nginx-access
++          hostname: bixu420-2
++          __path__: /var/log/nginx/access.log
++
++  - job_name: nginx-error
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          job: nginx-error
++          hostname: bixu420-2
++          __path__: /var/log/nginx/error.log
++
++  - job_name: syslog
++    syslog:
++      listen_address: 0.0.0.0:8814
++      listen_protocol: tcp
++      labels:
++        job: haproxy
++        hostname: bixu420-2
+
+changed: [bixu420-2]
+
+TASK [init : Ensure promtail user has needed permissions] **********************
+changed: [bixu420-1]
+changed: [bixu420-3]
+changed: [bixu420-2]
+
+TASK [init : Ensure Promtail service is running] *******************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Ensure backup user exists (or update if present)] *****************
+changed: [bixu420-1]
+changed: [bixu420-3]
+changed: [bixu420-2]
+
+TASK [init : Ensure backup directory exists for backup user] *******************
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0755",
++    "mode": "0700",
+     "path": "/home/backup"
+ }
+
+changed: [bixu420-1]
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0755",
++    "mode": "0700",
+     "path": "/home/backup"
+ }
+
+changed: [bixu420-3]
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "mode": "0755",
++    "mode": "0700",
+     "path": "/home/backup"
+ }
+
+changed: [bixu420-2]
+
+TASK [init : Ensure .ssh directory exists for backup user] *********************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Deploy known_hosts file for backup user] **************************
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpb026dc08/known_host.j2
+@@ -0,0 +1,3 @@
++192.168.42.5 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
++backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
++backup.bixu.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
+
+changed: [bixu420-1]
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpiitjtv56/known_host.j2
+@@ -0,0 +1,3 @@
++192.168.42.5 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
++backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
++backup.bixu.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
+
+changed: [bixu420-3]
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpc5mrzleo/known_host.j2
+@@ -0,0 +1,3 @@
++192.168.42.5 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
++backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
++backup.bixu.io ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
+
+changed: [bixu420-2]
+
+TASK [init : ensure restore directory exists] **********************************
+--- before
++++ after
+@@ -1,7 +1,7 @@
+ {
+-    "group": 0,
+-    "mode": "0755",
+-    "owner": 0,
++    "group": 34,
++    "mode": "0640",
++    "owner": 34,
+     "path": "/home/backup/restore",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-1]
+--- before
++++ after
+@@ -1,7 +1,7 @@
+ {
+-    "group": 0,
+-    "mode": "0755",
+-    "owner": 0,
++    "group": 34,
++    "mode": "0640",
++    "owner": 34,
+     "path": "/home/backup/restore",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-3]
+--- before
++++ after
+@@ -1,7 +1,7 @@
+ {
+-    "group": 0,
+-    "mode": "0755",
+-    "owner": 0,
++    "group": 34,
++    "mode": "0640",
++    "owner": 34,
+     "path": "/home/backup/restore",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-2]
+
+TASK [init : Install duplicity] ************************************************
+The following additional packages will be installed:
+  librsync2t64 python3-fasteners python3-monotonic python3-nacl
+  python3-paramiko
+Suggested packages:
+  ncftp lftp tahoe-lafs python3-swiftclient python3-pip par2 python-nacl-doc
+  python3-gssapi python3-invoke
+The following NEW packages will be installed:
+  duplicity librsync2t64 python3-fasteners python3-monotonic python3-nacl
+  python3-paramiko
+0 upgraded, 6 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-1]
+The following additional packages will be installed:
+  librsync2t64 python3-fasteners python3-monotonic python3-nacl
+  python3-paramiko
+Suggested packages:
+  ncftp lftp tahoe-lafs python3-swiftclient python3-pip par2 python-nacl-doc
+  python3-gssapi python3-invoke
+The following NEW packages will be installed:
+  duplicity librsync2t64 python3-fasteners python3-monotonic python3-nacl
+  python3-paramiko
+0 upgraded, 6 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-3]
+The following additional packages will be installed:
+  librsync2t64 python3-fasteners python3-monotonic python3-nacl
+  python3-paramiko
+Suggested packages:
+  ncftp lftp tahoe-lafs python3-swiftclient python3-pip par2 python-nacl-doc
+  python3-gssapi python3-invoke
+The following NEW packages will be installed:
+  duplicity librsync2t64 python3-fasteners python3-monotonic python3-nacl
+  python3-paramiko
+0 upgraded, 6 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-2]
+
+TASK [init : Install python3-gnupg] ********************************************
+The following NEW packages will be installed:
+  python3-gnupg
+0 upgraded, 1 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-3]
+The following NEW packages will be installed:
+  python3-gnupg
+0 upgraded, 1 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-1]
+The following NEW packages will be installed:
+  python3-gnupg
+0 upgraded, 1 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-2]
+
+TASK [init : Install python3-boto3] ********************************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Install python3-pymysql] ******************************************
+Suggested packages:
+  python-pymysql-doc
+The following NEW packages will be installed:
+  python3-pymysql
+0 upgraded, 1 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-1]
+Suggested packages:
+  python-pymysql-doc
+The following NEW packages will be installed:
+  python3-pymysql
+0 upgraded, 1 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-3]
+Suggested packages:
+  python-pymysql-doc
+The following NEW packages will be installed:
+  python3-pymysql
+0 upgraded, 1 newly installed, 0 to remove and 249 not upgraded.
+changed: [bixu420-2]
+
+RUNNING HANDLER [init : restart promtail] **************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+changed: [bixu420-3]
+
+PLAY [bind] ********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [bind : Install BIND9] ****************************************************
+The following additional packages will be installed:
+  bind9-dnsutils bind9-host bind9-libs bind9-utils dns-root-data
+Suggested packages:
+  bind-doc
+The following NEW packages will be installed:
+  bind9 bind9-utils dns-root-data prometheus-bind-exporter
+The following packages will be upgraded:
+  bind9-dnsutils bind9-host bind9-libs
+3 upgraded, 4 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-1]
+The following additional packages will be installed:
+  bind9-dnsutils bind9-host bind9-libs bind9-utils dns-root-data
+Suggested packages:
+  bind-doc
+The following NEW packages will be installed:
+  bind9 bind9-utils dns-root-data prometheus-bind-exporter
+The following packages will be upgraded:
+  bind9-dnsutils bind9-host bind9-libs
+3 upgraded, 4 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-3]
+The following additional packages will be installed:
+  bind9-dnsutils bind9-host bind9-libs bind9-utils dns-root-data
+Suggested packages:
+  bind-doc
+The following NEW packages will be installed:
+  bind9 bind9-utils dns-root-data prometheus-bind-exporter
+The following packages will be upgraded:
+  bind9-dnsutils bind9-host bind9-libs
+3 upgraded, 4 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-2]
+
+TASK [bind : Install dnspython] ************************************************
+Suggested packages:
+  python3-trio python3-aioquic python3-h2 python3-httpx python3-httpcore
+The following NEW packages will be installed:
+  python3-dnspython
+0 upgraded, 1 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-1]
+Suggested packages:
+  python3-trio python3-aioquic python3-h2 python3-httpx python3-httpcore
+The following NEW packages will be installed:
+  python3-dnspython
+0 upgraded, 1 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-3]
+Suggested packages:
+  python3-trio python3-aioquic python3-h2 python3-httpx python3-httpcore
+The following NEW packages will be installed:
+  python3-dnspython
+0 upgraded, 1 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-2]
+
+TASK [bind : Deploy named.conf.options template] *******************************
+changed: [bixu420-3] => (item=None)
+changed: [bixu420-1] => (item=None)
+changed: [bixu420-2] => (item=None)
+changed: [bixu420-3] => (item=None)
+changed: [bixu420-3]
+changed: [bixu420-1] => (item=None)
+changed: [bixu420-1]
+changed: [bixu420-2] => (item=None)
+changed: [bixu420-2]
+
+TASK [bind : Run Zone template] ************************************************
+skipping: [bixu420-1] => (item=fwd) 
+skipping: [bixu420-1] => (item=ptr) 
+skipping: [bixu420-2] => (item=fwd) 
+skipping: [bixu420-2] => (item=ptr) 
+skipping: [bixu420-1]
+skipping: [bixu420-2]
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpa1ftlsln/db_fwd.j2
+@@ -0,0 +1,14 @@
++$TTL    604800
++bixu.io.   IN  SOA bixu420-3. admin.bixu.io. (
++              2       ; Serial
++         604800       ; Refresh
++          86400       ; Retry
++        2419200       ; Expire
++         604800 )     ; Negative Cache TTL
++;
++bixu.io. IN NS bixu420-1.bixu.io.
++bixu.io. IN NS bixu420-2.bixu.io.
++bixu.io. IN NS bixu420-3.bixu.io.
++bixu420-1 IN A 192.168.43.30
++bixu420-2 IN A 192.168.43.37
++bixu420-3 IN A 192.168.43.40
+
+changed: [bixu420-3] => (item=fwd)
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpiad2llep/db_ptr.j2
+@@ -0,0 +1,14 @@
++$TTL    604800
++168.192.in-addr.arpa.   IN  SOA bixu420-3. admin.bixu.io. (
++              3       ; Serial
++         604800       ; Refresh
++          86400       ; Retry
++        2419200       ; Expire
++         604800 )     ; Negative Cache TTL
++;
++168.192.in-addr.arpa. IN NS bixu420-1.bixu.io.
++168.192.in-addr.arpa. IN NS bixu420-2.bixu.io.
++168.192.in-addr.arpa. IN NS bixu420-3.bixu.io.
++30.43 IN PTR bixu420-1.bixu.io.
++37.43 IN PTR bixu420-2.bixu.io.
++40.43 IN PTR bixu420-3.bixu.io.
+
+changed: [bixu420-3] => (item=ptr)
+
+TASK [bind : BIND9 and prometheus-bind-exporter service] ***********************
+ok: [bixu420-1] => (item=bind9)
+ok: [bixu420-3] => (item=bind9)
+ok: [bixu420-2] => (item=bind9)
+ok: [bixu420-1] => (item=prometheus-bind-exporter)
+ok: [bixu420-3] => (item=prometheus-bind-exporter)
+ok: [bixu420-2] => (item=prometheus-bind-exporter)
+
+TASK [bind : meta] *************************************************************
+
+TASK [bind : meta] *************************************************************
+
+TASK [bind : meta] *************************************************************
+
+RUNNING HANDLER [bind : Restart bind9] *****************************************
+changed: [bixu420-1]
+changed: [bixu420-3]
+changed: [bixu420-2]
+
+TASK [bind : Ensure backup A record exists via dynamic update] *****************
+skipping: [bixu420-1]
+skipping: [bixu420-2]
+changed: [bixu420-3]
+
+TASK [bind : Ensure DNS server CNAMEs exist] ***********************************
+skipping: [bixu420-1] => (item=None) 
+skipping: [bixu420-1] => (item=None) 
+skipping: [bixu420-1] => (item=None) 
+skipping: [bixu420-1]
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2]
+changed: [bixu420-3] => (item=None)
+changed: [bixu420-3] => (item=None)
+changed: [bixu420-3] => (item=None)
+changed: [bixu420-3]
+
+TASK [dns : Stop systemd-resolved] *********************************************
+changed: [bixu420-2]
+changed: [bixu420-1]
+changed: [bixu420-3]
+
+TASK [dns : Deploy resolv.conf] ************************************************
+--- before: /etc/resolv.conf
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmp7iskqd5o/resolv.conf.j2
+@@ -1,23 +1,4 @@
+-# This is /run/systemd/resolve/stub-resolv.conf managed by man:systemd-resolved(8).
+-# Do not edit.
+-#
+-# This file might be symlinked as /etc/resolv.conf. If you're looking at
+-# /etc/resolv.conf and seeing this text, you have followed the symlink.
+-#
+-# This is a dynamic resolv.conf file for connecting local clients to the
+-# internal DNS stub resolver of systemd-resolved. This file lists all
+-# configured search domains.
+-#
+-# Run "resolvectl status" to see details about the uplink DNS servers
+-# currently in use.
+-#
+-# Third party programs should typically not access this file directly, but only
+-# through the symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a
+-# different way, replace this symlink by a static file or a different symlink.
+-#
+-# See man:systemd-resolved.service(8) for details about the supported modes of
+-# operation for /etc/resolv.conf.
++nameserver 192.168.43.30
++nameserver 192.168.43.37
++search bixu.io
+ 
+-nameserver 127.0.0.53
+-options edns0 trust-ad
+-search .
+
+changed: [bixu420-1]
+--- before: /etc/resolv.conf
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmp2brxanfe/resolv.conf.j2
+@@ -1,23 +1,4 @@
+-# This is /run/systemd/resolve/stub-resolv.conf managed by man:systemd-resolved(8).
+-# Do not edit.
+-#
+-# This file might be symlinked as /etc/resolv.conf. If you're looking at
+-# /etc/resolv.conf and seeing this text, you have followed the symlink.
+-#
+-# This is a dynamic resolv.conf file for connecting local clients to the
+-# internal DNS stub resolver of systemd-resolved. This file lists all
+-# configured search domains.
+-#
+-# Run "resolvectl status" to see details about the uplink DNS servers
+-# currently in use.
+-#
+-# Third party programs should typically not access this file directly, but only
+-# through the symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a
+-# different way, replace this symlink by a static file or a different symlink.
+-#
+-# See man:systemd-resolved.service(8) for details about the supported modes of
+-# operation for /etc/resolv.conf.
++nameserver 192.168.43.30
++nameserver 192.168.43.37
++search bixu.io
+ 
+-nameserver 127.0.0.53
+-options edns0 trust-ad
+-search .
+
+changed: [bixu420-3]
+--- before: /etc/resolv.conf
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmp168wnq0r/resolv.conf.j2
+@@ -1,23 +1,4 @@
+-# This is /run/systemd/resolve/stub-resolv.conf managed by man:systemd-resolved(8).
+-# Do not edit.
+-#
+-# This file might be symlinked as /etc/resolv.conf. If you're looking at
+-# /etc/resolv.conf and seeing this text, you have followed the symlink.
+-#
+-# This is a dynamic resolv.conf file for connecting local clients to the
+-# internal DNS stub resolver of systemd-resolved. This file lists all
+-# configured search domains.
+-#
+-# Run "resolvectl status" to see details about the uplink DNS servers
+-# currently in use.
+-#
+-# Third party programs should typically not access this file directly, but only
+-# through the symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a
+-# different way, replace this symlink by a static file or a different symlink.
+-#
+-# See man:systemd-resolved.service(8) for details about the supported modes of
+-# operation for /etc/resolv.conf.
++nameserver 192.168.43.30
++nameserver 192.168.43.37
++search bixu.io
+ 
+-nameserver 127.0.0.53
+-options edns0 trust-ad
+-search .
+
+changed: [bixu420-2]
+
+PLAY [dns] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [dns : Stop systemd-resolved] *********************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [dns : Deploy resolv.conf] ************************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+PLAY [mysql install] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [mysql : Install mysql-server] ********************************************
+The following additional packages will be installed:
+  libcgi-fast-perl libcgi-pm-perl libclone-perl libencode-locale-perl
+  libevent-pthreads-2.1-7t64 libfcgi-bin libfcgi-perl libfcgi0t64
+  libhtml-parser-perl libhtml-tagset-perl libhtml-template-perl
+  libhttp-date-perl libhttp-message-perl libio-html-perl
+  liblwp-mediatypes-perl libmecab2 libprotobuf-lite32t64 liburi-perl
+  mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client-8.0
+  mysql-client-core-8.0 mysql-common mysql-server-8.0 mysql-server-core-8.0
+Suggested packages:
+  libdata-dump-perl libipc-sharedcache-perl libio-compress-brotli-perl
+  libbusiness-isbn-perl libregexp-ipv6-perl libwww-perl mailx tinyca
+The following NEW packages will be installed:
+  libcgi-fast-perl libcgi-pm-perl libclone-perl libencode-locale-perl
+  libevent-pthreads-2.1-7t64 libfcgi-bin libfcgi-perl libfcgi0t64
+  libhtml-parser-perl libhtml-tagset-perl libhtml-template-perl
+  libhttp-date-perl libhttp-message-perl libio-html-perl
+  liblwp-mediatypes-perl libmecab2 libprotobuf-lite32t64 liburi-perl
+  mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client-8.0
+  mysql-client-core-8.0 mysql-common mysql-server mysql-server-8.0
+  mysql-server-core-8.0
+0 upgraded, 27 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-1]
+The following additional packages will be installed:
+  libcgi-fast-perl libcgi-pm-perl libclone-perl libencode-locale-perl
+  libevent-pthreads-2.1-7t64 libfcgi-bin libfcgi-perl libfcgi0t64
+  libhtml-parser-perl libhtml-tagset-perl libhtml-template-perl
+  libhttp-date-perl libhttp-message-perl libio-html-perl
+  liblwp-mediatypes-perl libmecab2 libprotobuf-lite32t64 liburi-perl
+  mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client-8.0
+  mysql-client-core-8.0 mysql-common mysql-server-8.0 mysql-server-core-8.0
+Suggested packages:
+  libdata-dump-perl libipc-sharedcache-perl libio-compress-brotli-perl
+  libbusiness-isbn-perl libregexp-ipv6-perl libwww-perl mailx tinyca
+The following NEW packages will be installed:
+  libcgi-fast-perl libcgi-pm-perl libclone-perl libencode-locale-perl
+  libevent-pthreads-2.1-7t64 libfcgi-bin libfcgi-perl libfcgi0t64
+  libhtml-parser-perl libhtml-tagset-perl libhtml-template-perl
+  libhttp-date-perl libhttp-message-perl libio-html-perl
+  liblwp-mediatypes-perl libmecab2 libprotobuf-lite32t64 liburi-perl
+  mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client-8.0
+  mysql-client-core-8.0 mysql-common mysql-server mysql-server-8.0
+  mysql-server-core-8.0
+0 upgraded, 27 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-2]
+
+TASK [mysql : Install PyMySQL library] *****************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Deploy mysql config] *********************************************
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpos0sev6y/override.cnf.j2
+@@ -0,0 +1,6 @@
++[mysqld]
++bind-address = 0.0.0.0
++log-bin = /var/log/mysql/mysql-bin.log
++relay-log = /var/log/mysql/mysql-relay.log
++replicate-do-db = agama
++server-id = 286
+\ No newline at end of file
+
+changed: [bixu420-1]
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmp62sc5614/override.cnf.j2
+@@ -0,0 +1,6 @@
++[mysqld]
++bind-address = 0.0.0.0
++log-bin = /var/log/mysql/mysql-bin.log
++relay-log = /var/log/mysql/mysql-relay.log
++replicate-do-db = agama
++server-id = 293
+\ No newline at end of file
+
+changed: [bixu420-2]
+
+TASK [mysql : Flush handlers] **************************************************
+
+TASK [mysql : Flush handlers] **************************************************
+
+RUNNING HANDLER [mysql : Restart mysql] ****************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [mysql : mysql service] ***************************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [mysql : MySQL user] ******************************************************
+changed: [bixu420-2]
+changed: [bixu420-1]
+
+TASK [mysql : MySQL backup user] ***********************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [mysql : MySQL replication user] ******************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [mysql : MySQL database] **************************************************
+skipping: [bixu420-2]
+changed: [bixu420-1]
+
+TASK [mysql : Deploy backup MySQL client credentials] **************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [mysql : MySQL exporter user] *********************************************
+changed: [bixu420-2]
+changed: [bixu420-1]
+
+TASK [mysql : install msql-exporter] *******************************************
+The following NEW packages will be installed:
+  prometheus-mysqld-exporter
+0 upgraded, 1 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-1]
+The following NEW packages will be installed:
+  prometheus-mysqld-exporter
+0 upgraded, 1 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-2]
+
+TASK [mysql : Deploy mysqld_exporter config] ***********************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [mysql : Deploy exporter config override] *********************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [mysql : mysql service] ***************************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [mysql : Ensure backup parent directory exists] ***************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Ensure backup directory exists] **********************************
+--- before
++++ after
+@@ -1,7 +1,7 @@
+ {
+-    "group": 0,
+-    "mode": "0755",
+-    "owner": 0,
++    "group": 34,
++    "mode": "0750",
++    "owner": 34,
+     "path": "/home/backup/mysql",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-1]
+--- before
++++ after
+@@ -1,7 +1,7 @@
+ {
+-    "group": 0,
+-    "mode": "0755",
+-    "owner": 0,
++    "group": 34,
++    "mode": "0750",
++    "owner": 34,
+     "path": "/home/backup/mysql",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-2]
+
+TASK [mysql : Deploy cron tab for MySQL backups] *******************************
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpdgxikbuv/backup-cron.j2
+@@ -0,0 +1,2 @@
++
++
+
+changed: [bixu420-1]
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpso9svahg/backup-cron.j2
+@@ -0,0 +1,9 @@
++0 17 * * * backup mysqldump agama > /home/backup/mysql/agama.sql
++
++# Duplicity backups (rsync backend)
++5 17 * * 0 backup duplicity --allow-source-mismatch --no-encryption full /home/backup/mysql/ rsync://Bixu420@backup.bixu.io/mysql
++
++5 17 * * 1-6  backup  duplicity --allow-source-mismatch --no-encryption incremental /home/backup/mysql/ rsync://Bixu420@backup.bixu.io/mysql
++
++15 17 * * 0 backup duplicity --allow-source-mismatch remove-older-than 2W --no-encryption --force rsync://Bixu420@backup.bixu.io/mysql
++
+
+changed: [bixu420-2]
+
+TASK [mysql : Set MySQL read-only mode dynamically] ****************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [mysql : Ensure MySQL CNAMEs exist] ***************************************
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2]
+changed: [bixu420-1] => (item=None)
+changed: [bixu420-1] => (item=None)
+changed: [bixu420-1]
+
+RUNNING HANDLER [mysql : Restart exporter] *************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+RUNNING HANDLER [mysql : Restart cron] *****************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+RUNNING HANDLER [mysql : Reset MySQL replica] **********************************
+skipping: [bixu420-1] => (item=stopreplica) 
+skipping: [bixu420-1] => (item=resetreplicaall) 
+skipping: [bixu420-1] => (item=changeprimary) 
+skipping: [bixu420-1] => (item=startreplica) 
+skipping: [bixu420-1]
+changed: [bixu420-2] => (item=stopreplica)
+changed: [bixu420-2] => (item=resetreplicaall)
+changed: [bixu420-2] => (item=changeprimary)
+changed: [bixu420-2] => (item=startreplica)
+
+PLAY [agama install] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [docker : install docker] *************************************************
+The following additional packages will be installed:
+  bridge-utils containerd dnsmasq-base pigz runc ubuntu-fan
+Suggested packages:
+  ifupdown aufs-tools cgroupfs-mount | cgroup-lite debootstrap docker-buildx
+  docker-compose-v2 docker-doc rinse zfs-fuse | zfsutils
+The following NEW packages will be installed:
+  bridge-utils containerd dnsmasq-base docker.io pigz runc ubuntu-fan
+0 upgraded, 7 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-1]
+The following additional packages will be installed:
+  bridge-utils containerd dnsmasq-base pigz runc ubuntu-fan
+Suggested packages:
+  ifupdown aufs-tools cgroupfs-mount | cgroup-lite debootstrap docker-buildx
+  docker-compose-v2 docker-doc rinse zfs-fuse | zfsutils
+The following NEW packages will be installed:
+  bridge-utils containerd dnsmasq-base docker.io pigz runc ubuntu-fan
+0 upgraded, 7 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-2]
+
+TASK [docker : ensure docker service is enabled and started] *******************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [docker : Install a loki plugin] ******************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [agama : Create AGAMA directory] ******************************************
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/opt/agama",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-1]
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/opt/agama",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-2]
+
+TASK [agama : Download AGAMA application] **************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [agama : Download AGAMA Dockerfile] ***************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [agama : Build agama Docker image] ****************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [agama : Run multiple agama containers] ***********************************
+changed: [bixu420-2] => (item=None)
+changed: [bixu420-1] => (item=None)
+changed: [bixu420-2] => (item=None)
+changed: [bixu420-1] => (item=None)
+changed: [bixu420-2] => (item=None)
+changed: [bixu420-2]
+changed: [bixu420-1] => (item=None)
+changed: [bixu420-1]
+
+TASK [agama : Ensure Agama web CNAMEs exist] ***********************************
+skipping: [bixu420-1] => (item=bixu420-2) 
+skipping: [bixu420-1] => (item=bixu420-1) 
+skipping: [bixu420-1]
+changed: [bixu420-2] => (item=bixu420-2)
+changed: [bixu420-2] => (item=bixu420-1)
+
+PLAY [haproxy install] *********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [haproxy : Install haproxy] ***********************************************
+The following additional packages will be installed:
+  liblua5.4-0
+Suggested packages:
+  vim-haproxy haproxy-doc
+The following NEW packages will be installed:
+  haproxy liblua5.4-0
+0 upgraded, 2 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-2]
+The following additional packages will be installed:
+  liblua5.4-0
+Suggested packages:
+  vim-haproxy haproxy-doc
+The following NEW packages will be installed:
+  haproxy liblua5.4-0
+0 upgraded, 2 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-1]
+
+TASK [haproxy : Deploy haproxy config] *****************************************
+--- before: /etc/haproxy/haproxy.cfg
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmp3esyplvi/haproxy.cfg.j2
+@@ -1,34 +1,54 @@
+ global
+-	log /dev/log	local0
+-	log /dev/log	local1 notice
+-	chroot /var/lib/haproxy
+-	stats socket /run/haproxy/admin.sock mode 660 level admin
+-	stats timeout 30s
+-	user haproxy
+-	group haproxy
+-	daemon
+-
+-	# Default SSL material locations
+-	ca-base /etc/ssl/certs
+-	crt-base /etc/ssl/private
+-
+-	# See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
+-        ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+-        ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+-        ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
++    log /dev/log local0
++    log /dev/log local1 notice
++    log ring@logbuffer local0
++    chroot /var/lib/haproxy
++    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
++    stats timeout 30s
++    user haproxy
++    group haproxy
++    daemon
+ 
+ defaults
+-	log	global
+-	mode	http
+-	option	httplog
+-	option	dontlognull
+-        timeout connect 5000
+-        timeout client  50000
+-        timeout server  50000
+-	errorfile 400 /etc/haproxy/errors/400.http
+-	errorfile 403 /etc/haproxy/errors/403.http
+-	errorfile 408 /etc/haproxy/errors/408.http
+-	errorfile 500 /etc/haproxy/errors/500.http
+-	errorfile 502 /etc/haproxy/errors/502.http
+-	errorfile 503 /etc/haproxy/errors/503.http
+-	errorfile 504 /etc/haproxy/errors/504.http
++    log global
++    mode http
++    option httplog
++    option dontlognull
++    timeout connect 5000
++    timeout client 50000
++    timeout server 50000
++    errorfile 400 /etc/haproxy/errors/400.http
++    errorfile 403 /etc/haproxy/errors/403.http
++    errorfile 408 /etc/haproxy/errors/408.http
++    errorfile 500 /etc/haproxy/errors/500.http
++    errorfile 502 /etc/haproxy/errors/502.http
++    errorfile 503 /etc/haproxy/errors/503.http
++    errorfile 504 /etc/haproxy/errors/504.http
++
++frontend agama_frontend
++    bind :88
++    log-format "%ci:%cp [%t] %ft/%b/%s \"%HM %HP\" %ST %Tr"
++    default_backend agama_backend
++
++backend agama_backend
++        server bixu420-2-1 bixu420-2.bixu.io:8001 check
++        server bixu420-2-2 bixu420-2.bixu.io:8002 check
++        server bixu420-2-3 bixu420-2.bixu.io:8003 check
++            server bixu420-1-1 bixu420-1.bixu.io:8001 check
++        server bixu420-1-2 bixu420-1.bixu.io:8002 check
++        server bixu420-1-3 bixu420-1.bixu.io:8003 check
++    
++listen stats
++    bind localhost:9188
++    stats enable
++    stats uri /stats
++    stats refresh 30s
++
++ring logbuffer
++    description "buffer for HAProxy logs to Promtail"
++    format rfc5424
++    maxlen 1500
++    size 65536
++    timeout connect 10s
++    timeout server 20s
++    server promtail localhost:8814
+
+changed: [bixu420-1]
+--- before: /etc/haproxy/haproxy.cfg
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmp5kbr70w8/haproxy.cfg.j2
+@@ -1,34 +1,54 @@
+ global
+-	log /dev/log	local0
+-	log /dev/log	local1 notice
+-	chroot /var/lib/haproxy
+-	stats socket /run/haproxy/admin.sock mode 660 level admin
+-	stats timeout 30s
+-	user haproxy
+-	group haproxy
+-	daemon
+-
+-	# Default SSL material locations
+-	ca-base /etc/ssl/certs
+-	crt-base /etc/ssl/private
+-
+-	# See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
+-        ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+-        ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+-        ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
++    log /dev/log local0
++    log /dev/log local1 notice
++    log ring@logbuffer local0
++    chroot /var/lib/haproxy
++    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
++    stats timeout 30s
++    user haproxy
++    group haproxy
++    daemon
+ 
+ defaults
+-	log	global
+-	mode	http
+-	option	httplog
+-	option	dontlognull
+-        timeout connect 5000
+-        timeout client  50000
+-        timeout server  50000
+-	errorfile 400 /etc/haproxy/errors/400.http
+-	errorfile 403 /etc/haproxy/errors/403.http
+-	errorfile 408 /etc/haproxy/errors/408.http
+-	errorfile 500 /etc/haproxy/errors/500.http
+-	errorfile 502 /etc/haproxy/errors/502.http
+-	errorfile 503 /etc/haproxy/errors/503.http
+-	errorfile 504 /etc/haproxy/errors/504.http
++    log global
++    mode http
++    option httplog
++    option dontlognull
++    timeout connect 5000
++    timeout client 50000
++    timeout server 50000
++    errorfile 400 /etc/haproxy/errors/400.http
++    errorfile 403 /etc/haproxy/errors/403.http
++    errorfile 408 /etc/haproxy/errors/408.http
++    errorfile 500 /etc/haproxy/errors/500.http
++    errorfile 502 /etc/haproxy/errors/502.http
++    errorfile 503 /etc/haproxy/errors/503.http
++    errorfile 504 /etc/haproxy/errors/504.http
++
++frontend agama_frontend
++    bind :88
++    log-format "%ci:%cp [%t] %ft/%b/%s \"%HM %HP\" %ST %Tr"
++    default_backend agama_backend
++
++backend agama_backend
++        server bixu420-2-1 bixu420-2.bixu.io:8001 check
++        server bixu420-2-2 bixu420-2.bixu.io:8002 check
++        server bixu420-2-3 bixu420-2.bixu.io:8003 check
++            server bixu420-1-1 bixu420-1.bixu.io:8001 check
++        server bixu420-1-2 bixu420-1.bixu.io:8002 check
++        server bixu420-1-3 bixu420-1.bixu.io:8003 check
++    
++listen stats
++    bind localhost:9188
++    stats enable
++    stats uri /stats
++    stats refresh 30s
++
++ring logbuffer
++    description "buffer for HAProxy logs to Promtail"
++    format rfc5424
++    maxlen 1500
++    size 65536
++    timeout connect 10s
++    timeout server 20s
++    server promtail localhost:8814
+
+changed: [bixu420-2]
+
+TASK [haproxy : Start and enable haproxy service] ******************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [haproxy : Install prometheus-haproxy-exporter] ***************************
+The following NEW packages will be installed:
+  prometheus-haproxy-exporter
+0 upgraded, 1 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-1]
+The following NEW packages will be installed:
+  prometheus-haproxy-exporter
+0 upgraded, 1 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-2]
+
+TASK [haproxy : Configure haproxy exporter scrape URI] *************************
+--- before: /etc/default/prometheus-haproxy-exporter (content)
++++ after: /etc/default/prometheus-haproxy-exporter (content)
+@@ -2,4 +2,4 @@
+ # Due to shell escaping, to pass backslashes for regexes, you need to double
+ # them (\\d for \d). If running under systemd, you need to double them again
+ # (\\\\d to mean \d), and escape newlines too.
+-ARGS=""
++ARGS="--haproxy.scrape-uri=http://127.0.0.1:9188/stats?stats;csv"
+
+changed: [bixu420-1]
+--- before: /etc/default/prometheus-haproxy-exporter (content)
++++ after: /etc/default/prometheus-haproxy-exporter (content)
+@@ -2,4 +2,4 @@
+ # Due to shell escaping, to pass backslashes for regexes, you need to double
+ # them (\\d for \d). If running under systemd, you need to double them again
+ # (\\\\d to mean \d), and escape newlines too.
+-ARGS=""
++ARGS="--haproxy.scrape-uri=http://127.0.0.1:9188/stats?stats;csv"
+
+changed: [bixu420-2]
+
+TASK [haproxy : Start and enable haproxy exporter service] *********************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [haproxy : Ensure HAProxy CNAMEs exist] ***********************************
+changed: [bixu420-2] => (item=None)
+ok: [bixu420-1] => (item=None)
+changed: [bixu420-1] => (item=None)
+ok: [bixu420-2] => (item=None)
+changed: [bixu420-1] => (item=None)
+changed: [bixu420-1]
+ok: [bixu420-2] => (item=None)
+changed: [bixu420-2]
+
+RUNNING HANDLER [haproxy : Restart haproxy] ************************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+RUNNING HANDLER [haproxy : Restart haproxy exporter] ***************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+PLAY [keepalived install] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Install keepalived] *****************************************
+The following additional packages will be installed:
+  ipvsadm
+Suggested packages:
+  heartbeat ldirectord
+The following NEW packages will be installed:
+  ipvsadm keepalived
+0 upgraded, 2 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-1]
+The following additional packages will be installed:
+  ipvsadm
+Suggested packages:
+  heartbeat ldirectord
+The following NEW packages will be installed:
+  ipvsadm keepalived
+0 upgraded, 2 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-2]
+
+TASK [keepalived : Create keepalived_script user] ******************************
+changed: [bixu420-2]
+changed: [bixu420-1]
+
+TASK [keepalived : Deploy health check script] *********************************
+--- before
++++ after: /home/bixu/ica0002/roles/keepalived/files/check_haproxy.sh
+@@ -0,0 +1,2 @@
++#!/bin/bash
++ss -ntl | grep -q ':88 '
+
+changed: [bixu420-1]
+--- before
++++ after: /home/bixu/ica0002/roles/keepalived/files/check_haproxy.sh
+@@ -0,0 +1,2 @@
++#!/bin/bash
++ss -ntl | grep -q ':88 '
+
+changed: [bixu420-2]
+
+TASK [keepalived : Deploy keepalived config] ***********************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [keepalived : Enable script_security in keepalived] ***********************
+--- before: /etc/default/keepalived (content)
++++ after: /etc/default/keepalived (content)
+@@ -1,4 +1,4 @@
+ # Options to pass to keepalived
+ 
+ # DAEMON_ARGS are appended to the keepalived command-line
+-DAEMON_ARGS=""
++DAEMON_ARGS="--log-console --log-detail --dump-conf"
+
+changed: [bixu420-2]
+--- before: /etc/default/keepalived (content)
++++ after: /etc/default/keepalived (content)
+@@ -1,4 +1,4 @@
+ # Options to pass to keepalived
+ 
+ # DAEMON_ARGS are appended to the keepalived command-line
+-DAEMON_ARGS=""
++DAEMON_ARGS="--log-console --log-detail --dump-conf"
+
+changed: [bixu420-1]
+
+TASK [keepalived : Start and enable keepalived service] ************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [keepalived : Download and extract keepalived exporter] *******************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+TASK [keepalived : Install keepalived exporter] ********************************
+changed: [bixu420-2]
+changed: [bixu420-1]
+
+TASK [keepalived : Deploy keepalived exporter service unit] ********************
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpo9qozgyl/prometheus-keepalived-exporter.service.j2
+@@ -0,0 +1,13 @@
++[Unit]
++Description=Prometheus Keepalived Exporter
++After=network.target keepalived.service
++
++[Service]
++Type=simple
++User=root
++Group=root
++ExecStart=/usr/local/bin/prometheus-keepalived-exporter
++Restart=on-failure
++
++[Install]
++WantedBy=multi-user.target
+
+changed: [bixu420-2]
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmp_u3jptms/prometheus-keepalived-exporter.service.j2
+@@ -0,0 +1,13 @@
++[Unit]
++Description=Prometheus Keepalived Exporter
++After=network.target keepalived.service
++
++[Service]
++Type=simple
++User=root
++Group=root
++ExecStart=/usr/local/bin/prometheus-keepalived-exporter
++Restart=on-failure
++
++[Install]
++WantedBy=multi-user.target
+
+changed: [bixu420-1]
+
+TASK [keepalived : Start and enable keepalived exporter] ***********************
+changed: [bixu420-2]
+changed: [bixu420-1]
+
+RUNNING HANDLER [keepalived : Restart keepalived] ******************************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+RUNNING HANDLER [keepalived : Restart keepalived exporter] *********************
+changed: [bixu420-1]
+changed: [bixu420-2]
+
+PLAY [prometheus install] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-3]
+
+TASK [prometheus : Install Prometheus packages] ********************************
+The following additional packages will be installed:
+  fonts-glyphicons-halflings javascript-common libjs-bootstrap
+  libjs-bootstrap4 libjs-d3 libjs-eonasdan-bootstrap-datetimepicker
+  libjs-jquery libjs-jquery-hotkeys libjs-moment libjs-moment-timezone
+  libjs-mustache libjs-popper.js libjs-rickshaw libjs-sizzle node-jquery
+Suggested packages:
+  apache2 | lighttpd | httpd
+The following NEW packages will be installed:
+  fonts-glyphicons-halflings javascript-common libjs-bootstrap
+  libjs-bootstrap4 libjs-d3 libjs-eonasdan-bootstrap-datetimepicker
+  libjs-jquery libjs-jquery-hotkeys libjs-moment libjs-moment-timezone
+  libjs-mustache libjs-popper.js libjs-rickshaw libjs-sizzle node-jquery
+  prometheus
+0 upgraded, 16 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-3]
+
+TASK [prometheus : enable prometheus] ******************************************
+ok: [bixu420-3]
+
+TASK [prometheus : Deploy prometheus.yml] **************************************
+--- before: /etc/prometheus/prometheus.yml
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpxs8dd8yi/prometheus.yml.j2
+@@ -1,44 +1,63 @@
+-# Sample config for Prometheus.
++global:
++  scrape_interval: 15s
+ 
+-global:
+-  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+-  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+-  # scrape_timeout is set to the global default (10s).
+-
+-  # Attach these labels to any time series or alerts when communicating with
+-  # external systems (federation, remote storage, Alertmanager).
+-  external_labels:
+-      monitor: 'example'
+-
+-# Alertmanager configuration
+-alerting:
+-  alertmanagers:
+-  - static_configs:
+-    - targets: ['localhost:9093']
+-
+-# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+-rule_files:
+-  # - "first_rules.yml"
+-  # - "second_rules.yml"
+-
+-# A scrape configuration containing exactly one endpoint to scrape:
+-# Here it's Prometheus itself.
+ scrape_configs:
+-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+   - job_name: 'prometheus'
+-
+-    # Override the global default and scrape targets from this job every 5 seconds.
+-    scrape_interval: 5s
+-    scrape_timeout: 5s
+-
+-    # metrics_path defaults to '/metrics'
+-    # scheme defaults to 'http'.
+-
++    metrics_path: /prometheus/metrics
+     static_configs:
+       - targets: ['localhost:9090']
+ 
+-  - job_name: node
+-    # If prometheus-node-exporter is installed, grab stats about the local
+-    # machine by default.
++  - job_name: 'linux'
+     static_configs:
+-      - targets: ['localhost:9100']
++      - targets:
++          - bixu420-1.bixu.io:9100
++          - bixu420-2.bixu.io:9100
++          - bixu420-3.bixu.io:9100
++  - job_name: 'bind9'
++    static_configs:
++      - targets:
++          - ns-1.bixu.io:9119
++          - ns-2.bixu.io:9119
++          - ns-3.bixu.io:9119
++
++  - job_name: 'mysql'
++    static_configs:
++      - targets:
++          - db-1.bixu.io:9104
++          - db-2.bixu.io:9104
++
++  - job_name: 'nginx'
++    static_configs:
++      - targets:
++          - bixu420-1.bixu.io:9113
++          - bixu420-2.bixu.io:9113
++          - bixu420-3.bixu.io:9113
++
++  - job_name: 'haproxy'
++    static_configs:
++      - targets:
++          - lb-1.bixu.io:9101
++          - lb-2.bixu.io:9101
++          - lb-3.bixu.io:9101
++
++  - job_name: 'keepalived'
++    static_configs:
++      - targets:
++          - bixu420-1.bixu.io:9165
++          - bixu420-2.bixu.io:9165
++          - bixu420-3.bixu.io:9165
++
++  - job_name: 'promtail'
++    static_configs:
++      - targets:
++          - bixu420-1.bixu.io:9080
++          - bixu420-2.bixu.io:9080
++          - bixu420-3.bixu.io:9080
++
++  - job_name: 'loki'
++    static_configs:
++      - targets:
++          - loki.bixu.io:3100
++  - job_name: 'backup'
++    static_configs:
++      - targets: ['backup.bixu.io:9111']
+\ No newline at end of file
+
+changed: [bixu420-3]
+
+TASK [prometheus : Deploy /etc/default/prometheus with external URL] ***********
+--- before: /etc/default/prometheus
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpfal8q_2p/prometheus.default.j2
+@@ -1,5 +1 @@
+-# Set the command-line arguments to pass to the server.
+-# Due to shell escaping, to pass backslashes for regexes, you need to double
+-# them (\\d for \d). If running under systemd, you need to double them again
+-# (\\\\d to mean \d), and escape newlines too.
+-ARGS=""
++ARGS="--web.external-url=http://prometheus.bixu.io/prometheus --web.route-prefix=/prometheus --web.enable-admin-api --storage.tsdb.path=/var/lib/prometheus/metrics2"
+
+changed: [bixu420-3]
+
+TASK [prometheus : Ensure Prometheus data directory exists] ********************
+ok: [bixu420-3]
+
+TASK [prometheus : Ensure Prometheus snapshot directory exists] ****************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 112,
++    "owner": 109,
+     "path": "/var/lib/prometheus/metrics2/snapshots",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-3]
+
+TASK [prometheus : Deploy cron tab for Prometheus snapshots and backups] *******
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmp8kq0l1hl/backup-cron.j2
+@@ -0,0 +1,17 @@
++SHELL=/bin/bash
++PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
++SNAPSHOT_URL=http://localhost:9090/prometheus/api/v1/admin/tsdb/snapshot
++SNAPSHOT_DIR=/var/lib/prometheus/metrics2/snapshots/
++BACKUP_REMOTE=rsync://Bixu420@backup.bixu.io/prometheus
++LOG_FILE=/home/backup/prometheus-backup.log
++
++# Trigger Prometheus snapshot and push full backup every Sunday
++45 14 * * 0 backup curl -sf -XPOST "$SNAPSHOT_URL" >> "$LOG_FILE" 2>&1 && duplicity --allow-source-mismatch --no-encryption full "$SNAPSHOT_DIR" "$BACKUP_REMOTE" >> "$LOG_FILE" 2>&1
++
++# Trigger Prometheus snapshot and push incremental backups Monday-Saturday
++0 15 * * 1-6 backup curl -sf -XPOST "$SNAPSHOT_URL" >> "$LOG_FILE" 2>&1 && duplicity --allow-source-mismatch --no-encryption incremental "$SNAPSHOT_DIR" "$BACKUP_REMOTE" >> "$LOG_FILE" 2>&1
++
++10 15 * * 0 backup rm -rf "$SNAPSHOT_DIR"*
++
++20 15 * * 0 backup duplicity --allow-source-mismatch remove-older-than 2W --no-encryption --force "$BACKUP_REMOTE" >> "$LOG_FILE" 2>&1
++
+
+changed: [bixu420-3]
+
+TASK [prometheus : Ensure Prometheus CNAME exists] *****************************
+changed: [bixu420-3]
+
+TASK [nginx : Install nginx] ***************************************************
+The following additional packages will be installed:
+  nginx-common
+Suggested packages:
+  fcgiwrap nginx-doc ssl-cert
+The following NEW packages will be installed:
+  nginx nginx-common
+0 upgraded, 2 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-3]
+
+TASK [nginx : install nginx exporter] ******************************************
+The following NEW packages will be installed:
+  prometheus-nginx-exporter
+0 upgraded, 1 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-3]
+
+TASK [nginx : Deploy nginx config] *********************************************
+--- before: /etc/nginx/nginx.conf
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmp3674bdmm/nginx.conf.j2
+@@ -1,83 +1,57 @@
+ user www-data;
+ worker_processes auto;
+ pid /run/nginx.pid;
++
+ error_log /var/log/nginx/error.log;
+ include /etc/nginx/modules-enabled/*.conf;
+ 
+ events {
+-	worker_connections 768;
+-	# multi_accept on;
++    worker_connections 1024;
++    # multi_accept on;
+ }
+ 
+ http {
++    ##
++    # Basic Settings
++    ##
+ 
+-	##
+-	# Basic Settings
+-	##
++    sendfile on;
++    tcp_nopush on;
++    tcp_nodelay on;
++    keepalive_timeout 65;
++    types_hash_max_size 2048;
++    include /etc/nginx/mime.types;
++    default_type application/octet-stream;
+ 
+-	sendfile on;
+-	tcp_nopush on;
+-	types_hash_max_size 2048;
+-	# server_tokens off;
++    ##
++    # Logging Settings
++    ##
+ 
+-	# server_names_hash_bucket_size 64;
+-	# server_name_in_redirect off;
++    access_log /var/log/nginx/access.log;
++    error_log /var/log/nginx/error.log;
+ 
+-	include /etc/nginx/mime.types;
+-	default_type application/octet-stream;
++    log_format main_agama '$remote_addr - $remote_user [$time_local] '
++                          '"$request" $status $body_bytes_sent '
++                          '$request_time "$http_referer" "$http_user_agent"';
+ 
+-	##
+-	# SSL Settings
+-	##
++    ##
++    # SSL Settings
++    ##
+ 
+-	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+-	ssl_prefer_server_ciphers on;
++    ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
++    ssl_prefer_server_ciphers on;
+ 
+-	##
+-	# Logging Settings
+-	##
++    ##
++    # Gzip Settings
++    ##
+ 
+-	access_log /var/log/nginx/access.log;
++    gzip on;
++    gzip_disable "msie6";
+ 
+-	##
+-	# Gzip Settings
+-	##
++    ##
++    # Virtual Host Includes
++    ##
+ 
+-	gzip on;
+-
+-	# gzip_vary on;
+-	# gzip_proxied any;
+-	# gzip_comp_level 6;
+-	# gzip_buffers 16 8k;
+-	# gzip_http_version 1.1;
+-	# gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+-
+-	##
+-	# Virtual Host Configs
+-	##
+-
+-	include /etc/nginx/conf.d/*.conf;
+-	include /etc/nginx/sites-enabled/*;
++    include /etc/nginx/conf.d/*.conf;
++    include /etc/nginx/sites-enabled/*;
+ }
+-
+-
+-#mail {
+-#	# See sample authentication script at:
+-#	# http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+-#
+-#	# auth_http localhost/auth.php;
+-#	# pop3_capabilities "TOP" "USER";
+-#	# imap_capabilities "IMAP4rev1" "UIDPLUS";
+-#
+-#	server {
+-#		listen     localhost:110;
+-#		protocol   pop3;
+-#		proxy      on;
+-#	}
+-#
+-#	server {
+-#		listen     localhost:143;
+-#		protocol   imap;
+-#		proxy      on;
+-#	}
+-#}
+
+changed: [bixu420-3]
+
+TASK [nginx : Deploy nginx default site config] ********************************
+--- before: /etc/nginx/sites-enabled/default
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpfp3zdm02/default.j2
+@@ -1,91 +1,29 @@
+-##
+-# You should look at the following URL's in order to grasp a solid understanding
+-# of Nginx configuration files in order to fully unleash the power of Nginx.
+-# https://www.nginx.com/resources/wiki/start/
+-# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+-# https://wiki.debian.org/Nginx/DirectoryStructure
+-#
+-# In most cases, administrators will remove this file from sites-enabled/ and
+-# leave it as reference inside of sites-available where it will continue to be
+-# updated by the nginx packaging team.
+-#
+-# This file will automatically load configuration files provided by other
+-# applications, such as Drupal or Wordpress. These applications will be made
+-# available underneath a path with that package name, such as /drupal8.
+-#
+-# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+-##
+ 
+-# Default server configuration
+-#
+ server {
+-	listen 80 default_server;
+-	listen [::]:80 default_server;
++    listen 80 default_server;
+ 
+-	# SSL configuration
+-	#
+-	# listen 443 ssl default_server;
+-	# listen [::]:443 ssl default_server;
+-	#
+-	# Note: You should disable gzip for SSL traffic.
+-	# See: https://bugs.debian.org/773332
+-	#
+-	# Read up on ssl_ciphers to ensure a secure configuration.
+-	# See: https://bugs.debian.org/765782
+-	#
+-	# Self signed certs generated by the ssl-cert package
+-	# Don't use them in a production server!
+-	#
+-	# include snippets/snakeoil.conf;
+-
+-	root /var/www/html;
+-
+-	# Add index.php to the list if you are using PHP
+-	index index.html index.htm index.nginx-debian.html;
+-
+-	server_name _;
+-
+-	location / {
+-		# First attempt to serve request as file, then
+-		# as directory, then fall back to displaying a 404.
+-		try_files $uri $uri/ =404;
+-	}
+-
+-	# pass PHP scripts to FastCGI server
+-	#
+-	#location ~ \.php$ {
+-	#	include snippets/fastcgi-php.conf;
+-	#
+-	#	# With php-fpm (or other unix sockets):
+-	#	fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+-	#	# With php-cgi (or other tcp sockets):
+-	#	fastcgi_pass 127.0.0.1:9000;
+-	#}
+-
+-	# deny access to .htaccess files, if Apache's document root
+-	# concurs with nginx's one
+-	#
+-	#location ~ /\.ht {
+-	#	deny all;
+-	#}
++    server_name _;
++    location /prometheus {
++        proxy_pass http://localhost:9090;
++        proxy_set_header Host $host;
++        proxy_set_header X-Real-IP $remote_addr;
++        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
++        proxy_set_header X-Forwarded-Proto $scheme;
++    }
++    location /grafana {
++        proxy_pass http://localhost:3000;
++        proxy_set_header Host $host;
++        proxy_set_header X-Real-IP $remote_addr;
++        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
++        proxy_set_header X-Forwarded-Proto $scheme;
++    }
+ }
+ 
++server {
++    listen 8080 default_server;
++    
+ 
+-# Virtual Host configuration for example.com
+-#
+-# You can move that to a different file under sites-available/ and symlink that
+-# to sites-enabled/ to enable it.
+-#
+-#server {
+-#	listen 80;
+-#	listen [::]:80;
+-#
+-#	server_name example.com;
+-#
+-#	root /var/www/example.com;
+-#	index index.html;
+-#
+-#	location / {
+-#		try_files $uri $uri/ =404;
+-#	}
+-#}
++    location = /stub_status {
++       stub_status;
++    }
++}
+\ No newline at end of file
+
+changed: [bixu420-3]
+
+TASK [nginx : nginx service] ***************************************************
+ok: [bixu420-3]
+
+RUNNING HANDLER [prometheus : Restart prometheus] ******************************
+changed: [bixu420-3]
+
+RUNNING HANDLER [prometheus : Restart cron] ************************************
+changed: [bixu420-3]
+
+RUNNING HANDLER [nginx : Restart nginx] ****************************************
+changed: [bixu420-3]
+
+PLAY [loki install] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-3]
+
+TASK [docker : install docker] *************************************************
+The following additional packages will be installed:
+  bridge-utils containerd dnsmasq-base pigz runc ubuntu-fan
+Suggested packages:
+  ifupdown aufs-tools cgroupfs-mount | cgroup-lite debootstrap docker-buildx
+  docker-compose-v2 docker-doc rinse zfs-fuse | zfsutils
+The following NEW packages will be installed:
+  bridge-utils containerd dnsmasq-base docker.io pigz runc ubuntu-fan
+0 upgraded, 7 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-3]
+
+TASK [docker : ensure docker service is enabled and started] *******************
+ok: [bixu420-3]
+
+TASK [docker : Install a loki plugin] ******************************************
+changed: [bixu420-3]
+
+TASK [loki : Install Loki] *****************************************************
+The following NEW packages will be installed:
+  loki
+0 upgraded, 1 newly installed, 0 to remove and 246 not upgraded.
+changed: [bixu420-3]
+
+TASK [loki : Ensure loki group exists] *****************************************
+changed: [bixu420-3]
+
+TASK [loki : Ensure loki user exists] ******************************************
+changed: [bixu420-3]
+
+TASK [loki : Ensure loki system user  exists] **********************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure backup directory exists] ***********************************
+--- before
++++ after
+@@ -1,7 +1,7 @@
+ {
+-    "group": 0,
+-    "mode": "0755",
+-    "owner": 0,
++    "group": 34,
++    "mode": "0640",
++    "owner": 34,
+     "path": "/home/backup/loki",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-3]
+
+TASK [loki : Ensure Loki data directory exists] ********************************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 987,
++    "owner": 112,
+     "path": "/var/lib/loki",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-3]
+
+TASK [loki : Ensure Loki config directory exists] ******************************
+--- before
++++ after
+@@ -1,5 +1,5 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 987,
++    "owner": 112,
+     "path": "/etc/loki"
+ }
+
+changed: [bixu420-3]
+
+TASK [loki : Ensure Loki backup directory exists] ******************************
+ok: [bixu420-3]
+
+TASK [loki : Deploy Loki configuration] ****************************************
+--- before: /etc/loki/config.yml
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmpcq7buy16/loki.yml.j2
+@@ -7,16 +7,22 @@
+   grpc_server_max_concurrent_streams: 1000
+ 
+ common:
+-  instance_addr: 127.0.0.1
+-  path_prefix: /tmp/loki
++  instance_addr: loki.bixu.io
++  path_prefix: /var/lib/loki
+   storage:
+     filesystem:
+-      chunks_directory: /tmp/loki/chunks
+-      rules_directory: /tmp/loki/rules
++      chunks_directory: /var/lib/loki/chunks
++      rules_directory: /var/lib/loki/rules
+   replication_factor: 1
+   ring:
+     kvstore:
+       store: inmemory
++
++ingester:
++  lifecycler:
++    ring:
++      kvstore:
++        store: inmemory
+ 
+ query_range:
+   results_cache:
+@@ -27,7 +33,6 @@
+ 
+ limits_config:
+   metric_aggregation_enabled: true
+-  enable_multi_variant_queries: true
+ 
+ schema_config:
+   configs:
+@@ -42,24 +47,12 @@
+ pattern_ingester:
+   enabled: true
+   metric_aggregation:
+-    loki_address: localhost:3100
++    loki_address: loki.bixu.io:3100
+ 
+ ruler:
+-  alertmanager_url: http://localhost:9093
+-
++  alertmanager_url: http://loki.bixu.io:9093
+ frontend:
+   encoding: protobuf
+ 
+-
+-# By default, Loki will send anonymous, but uniquely-identifiable usage and configuration
+-# analytics to Grafana Labs. These statistics are sent to https://stats.grafana.org/
+-#
+-# Statistics help us better understand how Loki is used, and they show us performance
+-# levels for most users. This helps us prioritize features and documentation.
+-# For more information on what's sent, look at
+-# https://github.com/grafana/loki/blob/main/pkg/analytics/stats.go
+-# Refer to the buildReport method to see what goes into a report.
+-#
+-# If you would like to disable reporting, uncomment the following lines:
+-#analytics:
+-#  reporting_enabled: false
++analytics:
++  reporting_enabled: false
+
+changed: [bixu420-3]
+
+TASK [loki : Enable and start Loki service] ************************************
+ok: [bixu420-3]
+
+TASK [loki : Deploy cron tab for Loki backups] *********************************
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmplqanr6kj/backup-cron.j2
+@@ -0,0 +1,13 @@
++
++LOG_FILE=/home/backup/loki-backup.log
++
++# Full Loki backup every Sunday night
++45 14 * * 0 root  rsync -a --delete /tmp/loki/ /home/backup/loki/ && chown -R backup:backup /home/backup/loki && chmod -R u+rwX,g+rX /home/backup/loki
++
++
++0 15 * * 0 backup duplicity --allow-source-mismatch --no-encryption full /home/backup/loki/ rsync://Bixu420@backup.bixu.io/loki
++
++0 15 * * 1-6  backup  duplicity --allow-source-mismatch --no-encryption incremental /home/backup/loki/ rsync://Bixu420@backup.bixu.io/loki
++
++15 15 * * 0 backup duplicity --allow-source-mismatch remove-older-than 2W --no-encryption --force rsync://Bixu420@backup.bixu.io/loki
++
+
+changed: [bixu420-3]
+
+TASK [loki : Ensure Loki CNAME exists] *****************************************
+changed: [bixu420-3]
+
+RUNNING HANDLER [loki : Restart loki] ******************************************
+changed: [bixu420-3]
+
+RUNNING HANDLER [loki : Restart cron] ******************************************
+changed: [bixu420-3]
+
+PLAY [grafana install] *********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-3]
+
+TASK [docker : install docker] *************************************************
+ok: [bixu420-3]
+
+TASK [docker : ensure docker service is enabled and started] *******************
+ok: [bixu420-3]
+
+TASK [docker : Install a loki plugin] ******************************************
+ok: [bixu420-3]
+
+TASK [grafana : Create grafana provisioning directories] ***********************
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/opt/grafana/provisioning/dashboards",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-3] => (item=dashboards)
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/opt/grafana/provisioning/datasources",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [bixu420-3] => (item=datasources)
+
+TASK [grafana : deploy grafana config] *****************************************
+changed: [bixu420-3]
+
+TASK [grafana : Datasource provisioning] ***************************************
+--- before
++++ after: /home/bixu/.ansible/tmp/ansible-local-12699qp8f5by/tmp24t968qf/main.yaml.j2
+@@ -0,0 +1,29 @@
++apiVersion: 1
++
++deleteDatasources: []
++
++datasources:
++  - name: Prometheus
++    type: prometheus
++    access: proxy
++    orgId: 1
++    uid: prometheus1
++    url: http://prometheus.bixu.io/prometheus/
++    isDefault: true
++    editable: true
++    jsonData:
++      timeInterval: 5s
++      queryTimeout: 60s
++      httpMethod: POST
++    version: 1
++  - name: Loki
++    type: loki
++    access: proxy
++    orgId: 1
++    uid: loki1
++    url: http://loki.bixu.io:3100
++    isDefault: false
++    editable: true
++    jsonData:
++      maxLines: 1000
++    version: 1
+\ No newline at end of file
+
+changed: [bixu420-3]
+
+TASK [grafana : Dashboards provisioning] ***************************************
+--- before
++++ after: /home/bixu/ica0002/roles/grafana/files/dashboard.yaml
+@@ -0,0 +1,24 @@
++apiVersion: 1
++
++providers:
++  # <string> an unique provider name. Required
++  - name: 'a unique provider name'
++    # <int> Org id. Default to 1
++    orgId: 1
++    # <string> name of the dashboard folder.
++    folder: ''
++    # <string> folder UID. will be automatically generated if not specified
++    folderUid: ''
++    # <string> provider type. Default to 'file'
++    type: file
++    # <bool> disable dashboard deletion
++    disableDeletion: false
++    # <int> how often Grafana will scan for changed dashboards
++    updateIntervalSeconds: 10
++    # <bool> allow updating provisioned dashboards from the UI
++    allowUiUpdates: false
++    options:
++      # <string, required> path to dashboard files on disk. Required when using the 'file' type
++      path: /etc/grafana/provisioning/dashboards
++      # <bool> use folder names from filesystem to create folders in Grafana
++      foldersFromFilesStructure: true
+\ No newline at end of file
+
+changed: [bixu420-3]
+
+TASK [grafana : Deploy dashboard files] ****************************************
+--- before
++++ after: /home/bixu/ica0002/roles/grafana/files/main.json
+@@ -0,0 +1,1432 @@
++{
++  "annotations": {
++    "list": [
++      {
++        "builtIn": 1,
++        "datasource": {
++          "type": "grafana",
++          "uid": "-- Grafana --"
++        },
++        "enable": true,
++        "hide": true,
++        "iconColor": "rgba(0, 211, 255, 1)",
++        "name": "Annotations & Alerts",
++        "type": "dashboard"
++      }
++    ]
++  },
++  "editable": true,
++  "fiscalYearStartMonth": 0,
++  "graphTooltip": 0,
++  "id": 601523178926080,
++  "links": [],
++  "panels": [
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "red",
++                  "index": 1,
++                  "text": "DOWN"
++                },
++                "1": {
++                  "color": "green",
++                  "index": 0,
++                  "text": "UP"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 5,
++        "x": 0,
++        "y": 0
++      },
++      "id": 15,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "builder",
++          "expr": "keepalived_up",
++          "format": "time_series",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "KEEPALIVE STATUS",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "red",
++                  "index": 1,
++                  "text": "DOWN"
++                },
++                "1": {
++                  "color": "green",
++                  "index": 0,
++                  "text": "UP"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 5,
++        "x": 5,
++        "y": 0
++      },
++      "id": 6,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "nginx_up{job=\"nginx\"}",
++          "interval": "",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "NGINX STATUS",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "red",
++                  "index": 2,
++                  "text": "Down"
++                },
++                "1": {
++                  "color": "blue",
++                  "index": 1,
++                  "text": "Backup"
++                },
++                "2": {
++                  "color": "green",
++                  "index": 0,
++                  "text": "Master"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 4,
++        "x": 10,
++        "y": 0
++      },
++      "id": 14,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "builder",
++          "expr": "keepalived_vrrp_state",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "keepalived_vrrp_state",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "orange",
++                  "index": 1,
++                  "text": "DOWN"
++                },
++                "1": {
++                  "color": "green",
++                  "index": 0,
++                  "text": "UP"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 6,
++        "x": 14,
++        "y": 0
++      },
++      "id": 13,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "builder",
++          "expr": "haproxy_server_up{instance=\"lb-1.bixu.io:9101\"}",
++          "legendFormat": "{{server}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "Docker 1",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "red",
++                  "index": 1,
++                  "text": "DOWN"
++                },
++                "1": {
++                  "color": "green",
++                  "index": 0,
++                  "text": "UP"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 4,
++        "x": 20,
++        "y": 0
++      },
++      "id": 12,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "builder",
++          "expr": "haproxy_up",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "Haproxy_Up",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "red",
++                  "index": 1,
++                  "text": "DOWN"
++                },
++                "1": {
++                  "color": "green",
++                  "index": 0,
++                  "text": "UP"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 6,
++        "w": 5,
++        "x": 0,
++        "y": 5
++      },
++      "id": 4,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "builder",
++          "expr": "mysql_up",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "MYSQL STATUS",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "red",
++                  "index": 1,
++                  "text": "DOWN"
++                },
++                "1": {
++                  "color": "green",
++                  "index": 0,
++                  "text": "UP"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 6,
++        "w": 5,
++        "x": 5,
++        "y": 5
++      },
++      "id": 2,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "builder",
++          "expr": "bind_up",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "Bind_UP",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "loki",
++        "uid": "loki1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [],
++          "max": 100,
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "yellow",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              },
++              {
++                "color": "green",
++                "value": 99
++              }
++            ]
++          },
++          "unit": "percent"
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 6,
++        "w": 4,
++        "x": 10,
++        "y": 5
++      },
++      "id": 10,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "datasource": {
++            "type": "loki",
++            "uid": "loki1"
++          },
++          "direction": "backward",
++          "editorMode": "code",
++          "expr": "100 * (\r\n  sum without (hostname) (rate({job=\"haproxy\"} |~ \" [23][0-9][0-9] \" [10m]))\r\n  /\r\n  sum without (hostname) (rate({job=\"haproxy\"} [10m]))\r\n)",
++          "queryType": "range",
++          "refId": "A"
++        }
++      ],
++      "title": "Avability",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "orange",
++                  "index": 1,
++                  "text": "DOWN"
++                },
++                "1": {
++                  "color": "green",
++                  "index": 0,
++                  "text": "UP"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 6,
++        "w": 6,
++        "x": 14,
++        "y": 5
++      },
++      "id": 16,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "builder",
++          "expr": "haproxy_server_up{instance=\"lb-2.bixu.io:9101\"}",
++          "legendFormat": "{{server}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "Docker 2",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "palette-classic"
++          },
++          "custom": {
++            "axisBorderShow": false,
++            "axisCenteredZero": false,
++            "axisColorMode": "text",
++            "axisLabel": "",
++            "axisPlacement": "auto",
++            "barAlignment": 0,
++            "barWidthFactor": 0.6,
++            "drawStyle": "line",
++            "fillOpacity": 0,
++            "gradientMode": "none",
++            "hideFrom": {
++              "legend": false,
++              "tooltip": false,
++              "viz": false
++            },
++            "insertNulls": false,
++            "lineInterpolation": "linear",
++            "lineWidth": 1,
++            "pointSize": 5,
++            "scaleDistribution": {
++              "type": "linear"
++            },
++            "showPoints": "auto",
++            "showValues": false,
++            "spanNulls": false,
++            "stacking": {
++              "group": "A",
++              "mode": "none"
++            },
++            "thresholdsStyle": {
++              "mode": "off"
++            }
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 6,
++        "w": 4,
++        "x": 20,
++        "y": 5
++      },
++      "id": 8,
++      "options": {
++        "legend": {
++          "calcs": [],
++          "displayMode": "list",
++          "placement": "bottom",
++          "showLegend": true
++        },
++        "tooltip": {
++          "hideZeros": false,
++          "mode": "single",
++          "sort": "none"
++        }
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "rate(promtail_sent_entries_total[10m])",
++          "legendFormat": "__auto",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "promtail_sent_entries_total",
++      "type": "timeseries"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "palette-classic"
++          },
++          "custom": {
++            "axisBorderShow": false,
++            "axisCenteredZero": false,
++            "axisColorMode": "text",
++            "axisLabel": "",
++            "axisPlacement": "auto",
++            "barAlignment": 0,
++            "barWidthFactor": 0.6,
++            "drawStyle": "line",
++            "fillOpacity": 0,
++            "gradientMode": "none",
++            "hideFrom": {
++              "legend": false,
++              "tooltip": false,
++              "viz": false
++            },
++            "insertNulls": false,
++            "lineInterpolation": "linear",
++            "lineWidth": 1,
++            "pointSize": 5,
++            "scaleDistribution": {
++              "type": "linear"
++            },
++            "showPoints": "auto",
++            "showValues": false,
++            "spanNulls": false,
++            "stacking": {
++              "group": "A",
++              "mode": "none"
++            },
++            "thresholdsStyle": {
++              "mode": "off"
++            }
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 4,
++        "x": 0,
++        "y": 11
++      },
++      "id": 9,
++      "options": {
++        "legend": {
++          "calcs": [],
++          "displayMode": "list",
++          "placement": "bottom",
++          "showLegend": true
++        },
++        "tooltip": {
++          "hideZeros": false,
++          "mode": "single",
++          "sort": "none"
++        }
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "sum by(level) (rate(loki_log_messages_total[10m]))",
++          "legendFormat": "__auto",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "loki_log_messages_total",
++      "type": "timeseries"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "palette-classic"
++          },
++          "custom": {
++            "axisBorderShow": false,
++            "axisCenteredZero": false,
++            "axisColorMode": "text",
++            "axisLabel": "",
++            "axisPlacement": "auto",
++            "barAlignment": 0,
++            "barWidthFactor": 0.6,
++            "drawStyle": "line",
++            "fillOpacity": 0,
++            "gradientMode": "none",
++            "hideFrom": {
++              "legend": false,
++              "tooltip": false,
++              "viz": false
++            },
++            "insertNulls": false,
++            "lineInterpolation": "linear",
++            "lineWidth": 1,
++            "pointSize": 5,
++            "scaleDistribution": {
++              "type": "linear"
++            },
++            "showPoints": "auto",
++            "showValues": false,
++            "spanNulls": false,
++            "stacking": {
++              "group": "A",
++              "mode": "none"
++            },
++            "thresholdsStyle": {
++              "mode": "off"
++            }
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 4,
++        "x": 4,
++        "y": 11
++      },
++      "id": 3,
++      "options": {
++        "legend": {
++          "calcs": [],
++          "displayMode": "list",
++          "placement": "bottom",
++          "showLegend": true
++        },
++        "tooltip": {
++          "hideZeros": false,
++          "mode": "single",
++          "sort": "none"
++        }
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "sum by(instance) (rate(bind_resolver_queries_total[1m]))",
++          "legendFormat": "__auto",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "BInd Queries",
++      "type": "timeseries"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "palette-classic"
++          },
++          "custom": {
++            "axisBorderShow": false,
++            "axisCenteredZero": false,
++            "axisColorMode": "text",
++            "axisLabel": "",
++            "axisPlacement": "auto",
++            "barAlignment": 0,
++            "barWidthFactor": 0.6,
++            "drawStyle": "line",
++            "fillOpacity": 0,
++            "gradientMode": "none",
++            "hideFrom": {
++              "legend": false,
++              "tooltip": false,
++              "viz": false
++            },
++            "insertNulls": false,
++            "lineInterpolation": "linear",
++            "lineWidth": 1,
++            "pointSize": 5,
++            "scaleDistribution": {
++              "type": "linear"
++            },
++            "showPoints": "auto",
++            "showValues": false,
++            "spanNulls": false,
++            "stacking": {
++              "group": "A",
++              "mode": "none"
++            },
++            "thresholdsStyle": {
++              "mode": "off"
++            }
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 4,
++        "x": 8,
++        "y": 11
++      },
++      "id": 5,
++      "options": {
++        "legend": {
++          "calcs": [],
++          "displayMode": "list",
++          "placement": "bottom",
++          "showLegend": true
++        },
++        "tooltip": {
++          "hideZeros": false,
++          "mode": "single",
++          "sort": "none"
++        }
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "sum by (instance) (rate(mysql_global_status_commands_total[1m]))\r\n",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "mysql commands total",
++      "type": "timeseries"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 5,
++        "x": 12,
++        "y": 11
++      },
++      "id": 1,
++      "options": {
++        "minVizHeight": 75,
++        "minVizWidth": 75,
++        "orientation": "auto",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showThresholdLabels": false,
++        "showThresholdMarkers": true,
++        "sizing": "auto"
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "datasource": {
++            "type": "prometheus",
++            "uid": "prometheus1"
++          },
++          "editorMode": "code",
++          "expr": "1 - rate(node_cpu_seconds_total{mode=\"idle\"}[1m])\r\n",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "CPU UTIL",
++      "type": "gauge"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 5,
++        "x": 17,
++        "y": 11
++      },
++      "id": 17,
++      "options": {
++        "minVizHeight": 75,
++        "minVizWidth": 75,
++        "orientation": "auto",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showThresholdLabels": false,
++        "showThresholdMarkers": true,
++        "sizing": "auto"
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "datasource": {
++            "type": "prometheus",
++            "uid": "prometheus1"
++          },
++          "editorMode": "code",
++          "expr": "100 * (1 - (\r\n  node_memory_MemAvailable_bytes{instance!=\"localhost:9100\"} \r\n  / \r\n  node_memory_MemTotal_bytes{instance!=\"localhost:9100\"}\r\n))\r\n\r\n",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "RAM UTIL",
++      "type": "gauge"
++    },
++    {
++      "datasource": {
++        "type": "loki",
++        "uid": "loki1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          },
++          "unit": "dtdurationms"
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 8,
++        "x": 0,
++        "y": 16
++      },
++      "id": 11,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "datasource": {
++            "type": "loki",
++            "uid": "loki1"
++          },
++          "direction": "backward",
++          "editorMode": "code",
++          "expr": "avg(\r\n  avg_over_time(\r\n    {job=\"haproxy\"}\r\n    | regexp \" (?P<status>[0-9]{3}) (?P<tr>[0-9]+)$\"\r\n    | unwrap tr\r\n    [10m]\r\n  )\r\n)",
++          "queryType": "range",
++          "refId": "A"
++        }
++      ],
++      "title": "agama latency",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "palette-classic"
++          },
++          "custom": {
++            "axisBorderShow": false,
++            "axisCenteredZero": false,
++            "axisColorMode": "text",
++            "axisLabel": "",
++            "axisPlacement": "auto",
++            "barAlignment": 0,
++            "barWidthFactor": 0.6,
++            "drawStyle": "line",
++            "fillOpacity": 0,
++            "gradientMode": "none",
++            "hideFrom": {
++              "legend": false,
++              "tooltip": false,
++              "viz": false
++            },
++            "insertNulls": false,
++            "lineInterpolation": "linear",
++            "lineWidth": 1,
++            "pointSize": 5,
++            "scaleDistribution": {
++              "type": "linear"
++            },
++            "showPoints": "auto",
++            "showValues": false,
++            "spanNulls": false,
++            "stacking": {
++              "group": "A",
++              "mode": "none"
++            },
++            "thresholdsStyle": {
++              "mode": "off"
++            }
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 4,
++        "x": 17,
++        "y": 16
++      },
++      "id": 7,
++      "options": {
++        "legend": {
++          "calcs": [],
++          "displayMode": "list",
++          "placement": "bottom",
++          "showLegend": true
++        },
++        "tooltip": {
++          "hideZeros": false,
++          "mode": "single",
++          "sort": "none"
++        }
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "rate(nginx_http_requests_total[1h]) * 60\r\n",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "NGINX requests",
++      "type": "timeseries"
++    }
++  ],
++  "preload": false,
++  "schemaVersion": 42,
++  "tags": [],
++  "templating": {
++    "list": []
++  },
++  "time": {
++    "from": "now-5m",
++    "to": "now"
++  },
++  "timepicker": {},
++  "timezone": "browser",
++  "title": "main",
++  "uid": "bi99xj5",
++  "version": 1
++}
+\ No newline at end of file
+
+changed: [bixu420-3] => (item=main.json)
+--- before
++++ after: /home/bixu/ica0002/roles/grafana/files/agama.json
+@@ -0,0 +1,85 @@
++{
++  "annotations": {
++    "list": [
++      {
++        "builtIn": 1,
++        "datasource": {
++          "type": "grafana",
++          "uid": "-- Grafana --"
++        },
++        "enable": true,
++        "hide": true,
++        "iconColor": "rgba(0, 211, 255, 1)",
++        "name": "Annotations & Alerts",
++        "type": "dashboard"
++      }
++    ]
++  },
++  "editable": true,
++  "fiscalYearStartMonth": 0,
++  "graphTooltip": 0,
++  "id": 2190404089036800,
++  "links": [],
++  "panels": [
++    {
++      "datasource": {
++        "type": "loki",
++        "uid": "loki1"
++      },
++      "fieldConfig": {
++        "defaults": {},
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 8,
++        "w": 12,
++        "x": 0,
++        "y": 0
++      },
++      "id": 1,
++      "options": {
++        "dedupStrategy": "none",
++        "enableInfiniteScrolling": false,
++        "enableLogDetails": true,
++        "prettifyLogMessage": false,
++        "showCommonLabels": false,
++        "showControls": false,
++        "showLabels": false,
++        "showTime": false,
++        "sortOrder": "Descending",
++        "wrapLogMessage": false
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "datasource": {
++            "type": "loki",
++            "uid": "loki1"
++          },
++          "direction": "backward",
++          "editorMode": "builder",
++          "expr": "{service_name=\"haproxy\"}",
++          "queryType": "range",
++          "refId": "A"
++        }
++      ],
++      "title": "Agama.log",
++      "type": "logs"
++    }
++  ],
++  "preload": false,
++  "schemaVersion": 42,
++  "tags": [],
++  "templating": {
++    "list": []
++  },
++  "time": {
++    "from": "now-6h",
++    "to": "now"
++  },
++  "timepicker": {},
++  "timezone": "browser",
++  "title": "Agama",
++  "uid": "bimqc9r",
++  "version": 1
++}
+\ No newline at end of file
+
+changed: [bixu420-3] => (item=agama.json)
+--- before
++++ after: /home/bixu/ica0002/roles/grafana/files/mysql.json
+@@ -0,0 +1,550 @@
++{
++  "annotations": {
++    "list": [
++      {
++        "builtIn": 1,
++        "datasource": {
++          "type": "grafana",
++          "uid": "-- Grafana --"
++        },
++        "enable": true,
++        "hide": true,
++        "iconColor": "rgba(0, 211, 255, 1)",
++        "name": "Annotations & Alerts",
++        "type": "dashboard"
++      }
++    ]
++  },
++  "editable": true,
++  "fiscalYearStartMonth": 0,
++  "graphTooltip": 0,
++  "id": 601523325726720,
++  "links": [],
++  "panels": [
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "orange",
++                  "index": 1,
++                  "text": "Disabled"
++                },
++                "1": {
++                  "color": "green",
++                  "index": 0,
++                  "text": "Running"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 5,
++        "x": 0,
++        "y": 0
++      },
++      "id": 6,
++      "options": {
++        "colorMode": "background",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "mysql_slave_status_slave_sql_running",
++          "legendFormat": "__auto",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "Slave sql running",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "red",
++                  "index": 1,
++                  "text": "DOWN"
++                },
++                "1": {
++                  "color": "green",
++                  "index": 0,
++                  "text": "UP"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 6,
++        "x": 5,
++        "y": 0
++      },
++      "id": 2,
++      "options": {
++        "colorMode": "background",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "text": {
++          "titleSize": 20
++        },
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "mysql_up",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "MYSQL STATUS",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "orange",
++                  "index": 1,
++                  "text": "Disabled"
++                },
++                "1": {
++                  "color": "green",
++                  "index": 0,
++                  "text": "Enabled"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 5,
++        "x": 11,
++        "y": 0
++      },
++      "id": 5,
++      "options": {
++        "colorMode": "background",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "mysql_slave_status_slave_io_running",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": " historical data for MySQL replication threads ",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [
++            {
++              "options": {
++                "0": {
++                  "color": "green",
++                  "index": 1,
++                  "text": "Write Enabled"
++                },
++                "1": {
++                  "color": "yellow",
++                  "index": 0,
++                  "text": "Write Disabled"
++                }
++              },
++              "type": "value"
++            }
++          ],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 5,
++        "w": 5,
++        "x": 16,
++        "y": 0
++      },
++      "id": 4,
++      "options": {
++        "colorMode": "background_solid",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "vertical",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "text": {
++          "titleSize": 20
++        },
++        "textMode": "value_and_name",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "mysql_global_variables_read_only",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "mysql_global_variables_read_only",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 6,
++        "w": 7,
++        "x": 0,
++        "y": 5
++      },
++      "id": 3,
++      "options": {
++        "colorMode": "none",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "mysql_global_variables_server_id",
++          "legendFormat": "{{instance}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "Mysql server Id",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "palette-classic"
++          },
++          "custom": {
++            "axisBorderShow": false,
++            "axisCenteredZero": false,
++            "axisColorMode": "text",
++            "axisLabel": "",
++            "axisPlacement": "auto",
++            "barAlignment": 0,
++            "barWidthFactor": 0.6,
++            "drawStyle": "line",
++            "fillOpacity": 0,
++            "gradientMode": "none",
++            "hideFrom": {
++              "legend": false,
++              "tooltip": false,
++              "viz": false
++            },
++            "insertNulls": false,
++            "lineInterpolation": "linear",
++            "lineWidth": 1,
++            "pointSize": 5,
++            "scaleDistribution": {
++              "type": "linear"
++            },
++            "showPoints": "auto",
++            "showValues": false,
++            "spanNulls": false,
++            "stacking": {
++              "group": "A",
++              "mode": "none"
++            },
++            "thresholdsStyle": {
++              "mode": "off"
++            }
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 8,
++        "w": 8,
++        "x": 7,
++        "y": 5
++      },
++      "id": 1,
++      "options": {
++        "legend": {
++          "calcs": [],
++          "displayMode": "list",
++          "placement": "bottom",
++          "showLegend": true
++        },
++        "tooltip": {
++          "hideZeros": false,
++          "mode": "single",
++          "sort": "none"
++        }
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "datasource": {
++            "type": "prometheus",
++            "uid": "prometheus1"
++          },
++          "editorMode": "code",
++          "expr": "rate(mysql_global_status_commands_total{command=\"select\"}[5m])",
++          "legendFormat": "{{instance}} : {{command}}",
++          "range": true,
++          "refId": "A"
++        },
++        {
++          "datasource": {
++            "type": "prometheus",
++            "uid": "prometheus1"
++          },
++          "editorMode": "code",
++          "expr": "rate(mysql_global_status_commands_total{command=\"insert\"}[5m])\r\n",
++          "hide": false,
++          "instant": false,
++          "legendFormat": "{{instance}} : {{command}}",
++          "range": true,
++          "refId": "B"
++        },
++        {
++          "datasource": {
++            "type": "prometheus",
++            "uid": "prometheus1"
++          },
++          "editorMode": "code",
++          "expr": "rate(mysql_global_status_commands_total{command=\"update\"}[5m])",
++          "hide": false,
++          "instant": false,
++          "legendFormat": "{{instance}} : {{command}}",
++          "range": true,
++          "refId": "C"
++        }
++      ],
++      "title": "mysql commands rate",
++      "type": "timeseries"
++    }
++  ],
++  "preload": false,
++  "schemaVersion": 42,
++  "tags": [],
++  "templating": {
++    "list": []
++  },
++  "time": {
++    "from": "now-6h",
++    "to": "now"
++  },
++  "timepicker": {},
++  "timezone": "browser",
++  "title": "MYSQL",
++  "uid": "bi7rp2t",
++  "version": 1
++}
+\ No newline at end of file
+
+changed: [bixu420-3] => (item=mysql.json)
+--- before
++++ after: /home/bixu/ica0002/roles/grafana/files/backups.json
+@@ -0,0 +1,432 @@
++{
++  "annotations": {
++    "list": [
++      {
++        "builtIn": 1,
++        "datasource": {
++          "type": "grafana",
++          "uid": "-- Grafana --"
++        },
++        "enable": true,
++        "hide": true,
++        "iconColor": "rgba(0, 211, 255, 1)",
++        "name": "Annotations & Alerts",
++        "type": "dashboard"
++      }
++    ]
++  },
++  "editable": true,
++  "fiscalYearStartMonth": 0,
++  "graphTooltip": 0,
++  "id": 2613220052062208,
++  "links": [],
++  "panels": [
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 86400
++              }
++            ]
++          },
++          "unit": "s"
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 7,
++        "w": 10,
++        "x": 0,
++        "y": 0
++      },
++      "id": 6,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "time() - backup_last_success_time{user=\"Bixu420\", service=\"loki\"}\r\n",
++          "legendFormat": "__auto",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "Last Loki Backup Time",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 7,
++        "w": 8,
++        "x": 10,
++        "y": 0
++      },
++      "id": 5,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "backups_total{user=\"Bixu420\", service=\"loki\"}",
++          "legendFormat": "{{type}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "Loki Backup Counts",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 86400
++              }
++            ]
++          },
++          "unit": "s"
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 7,
++        "w": 10,
++        "x": 0,
++        "y": 7
++      },
++      "id": 4,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "time() - backup_last_success_time{user=\"Bixu420\", service=\"prometheus\"}\r\n",
++          "legendFormat": "__auto",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "Last Prometheus Backup Time",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 7,
++        "w": 12,
++        "x": 10,
++        "y": 7
++      },
++      "id": 3,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "backups_total{user=\"Bixu420\", service=\"prometheus\"}",
++          "legendFormat": "{{type}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "Prometheus Backup Counts",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 86400
++              }
++            ]
++          },
++          "unit": "s"
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 7,
++        "w": 10,
++        "x": 0,
++        "y": 14
++      },
++      "id": 2,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "editorMode": "code",
++          "expr": "time() - backup_last_success_time{user=\"Bixu420\", service=\"mysql\"}\r\n",
++          "interval": "",
++          "legendFormat": "__auto",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "Last MySQL Backup Time",
++      "type": "stat"
++    },
++    {
++      "datasource": {
++        "type": "prometheus",
++        "uid": "prometheus1"
++      },
++      "fieldConfig": {
++        "defaults": {
++          "color": {
++            "mode": "thresholds"
++          },
++          "mappings": [],
++          "thresholds": {
++            "mode": "absolute",
++            "steps": [
++              {
++                "color": "green",
++                "value": 0
++              },
++              {
++                "color": "red",
++                "value": 80
++              }
++            ]
++          }
++        },
++        "overrides": []
++      },
++      "gridPos": {
++        "h": 7,
++        "w": 12,
++        "x": 10,
++        "y": 14
++      },
++      "id": 1,
++      "options": {
++        "colorMode": "value",
++        "graphMode": "area",
++        "justifyMode": "auto",
++        "orientation": "auto",
++        "percentChangeColorMode": "standard",
++        "reduceOptions": {
++          "calcs": [
++            "lastNotNull"
++          ],
++          "fields": "",
++          "values": false
++        },
++        "showPercentChange": false,
++        "textMode": "auto",
++        "wideLayout": true
++      },
++      "pluginVersion": "12.3.0",
++      "targets": [
++        {
++          "datasource": {
++            "type": "prometheus",
++            "uid": "prometheus1"
++          },
++          "editorMode": "code",
++          "expr": "backups_total{user=\"Bixu420\", service=\"mysql\"}",
++          "legendFormat": "{{type}}",
++          "range": true,
++          "refId": "A"
++        }
++      ],
++      "title": "MySQL Backup count",
++      "type": "stat"
++    }
++  ],
++  "preload": false,
++  "schemaVersion": 42,
++  "tags": [],
++  "templating": {
++    "list": []
++  },
++  "time": {
++    "from": "now-6h",
++    "to": "now"
++  },
++  "timepicker": {},
++  "timezone": "browser",
++  "title": "Backup",
++  "uid": "biqg499",
++  "version": 1
++}
+\ No newline at end of file
+
+changed: [bixu420-3] => (item=backups.json)
+
+TASK [grafana : Deploy grafana container] **************************************
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "exists": false,
+-    "running": false
++    "exists": true,
++    "running": true
+ }
+
+changed: [bixu420-3]
+
+TASK [grafana : meta] **********************************************************
+
+RUNNING HANDLER [grafana : Restart grafana] ************************************
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+-    "restarted": false,
++    "restarted": true,
+     "running": true
+ }
+
+changed: [bixu420-3]
+
+TASK [grafana : Ensure Grafana CNAME exists] ***********************************
+changed: [bixu420-3]
+
+TASK [nginx : Install nginx] ***************************************************
+ok: [bixu420-3]
+
+TASK [nginx : install nginx exporter] ******************************************
+ok: [bixu420-3]
+
+TASK [nginx : Deploy nginx config] *********************************************
+ok: [bixu420-3]
+
+TASK [nginx : Deploy nginx default site config] ********************************
+ok: [bixu420-3]
+
+TASK [nginx : nginx service] ***************************************************
+ok: [bixu420-3]
+
+PLAY RECAP *********************************************************************
+bixu420-1                  : ok=91   changed=69   unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+bixu420-2                  : ok=91   changed=69   unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+bixu420-3                  : ok=91   changed=61   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
++ ansible-playbook infra.yaml --diff
+[WARNING]: While constructing a mapping from
+/home/bixu/ica0002/roles/mysql/tasks/main.yaml, line 52, column 3, found a
+duplicate dict key (notify). Using last defined value only.
+[WARNING]: While constructing a mapping from
+/home/bixu/ica0002/roles/mysql/tasks/main.yaml, line 132, column 3, found a
+duplicate dict key (notify). Using last defined value only.
+
+PLAY [Initial setup] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Platform linux on host bixu420-3 is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host bixu420-1 is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host bixu420-2 is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Update APT cache] *************************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+ok: [bixu420-3]
+
+TASK [init : Install prometheus node exporter] *********************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Enable prometheus] ************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Make directory for apt key] ***************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Add Grafana key] **************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Add Grafana repository] *******************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : promtail] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Ensure Promtail is installed] *************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Ensure promtail system group exists] ******************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Ensure promtail system user exists] *******************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Ensure Promtail data directory exists (persistent)] ***************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Ensure Promtail config is up to date] *****************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Ensure promtail user has needed permissions] **********************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Ensure Promtail service is running] *******************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Ensure backup user exists (or update if present)] *****************
+[WARNING]: Found existing ssh key private file "/home/backup/.ssh/id_rsa", no
+force, so skipping ssh-keygen generation
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Ensure backup directory exists for backup user] *******************
+ok: [bixu420-2]
+ok: [bixu420-1]
+ok: [bixu420-3]
+
+TASK [init : Ensure .ssh directory exists for backup user] *********************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Deploy known_hosts file for backup user] **************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : ensure restore directory exists] **********************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Install duplicity] ************************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Install python3-gnupg] ********************************************
+ok: [bixu420-3]
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [init : Install python3-boto3] ********************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Install python3-pymysql] ******************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+ok: [bixu420-3]
+
+PLAY [bind] ********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [bind : Install BIND9] ****************************************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [bind : Install dnspython] ************************************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [bind : Deploy named.conf.options template] *******************************
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-3] => (item=None)
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-3] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-2]
+
+TASK [bind : Run Zone template] ************************************************
+skipping: [bixu420-1] => (item=fwd) 
+skipping: [bixu420-1] => (item=ptr) 
+skipping: [bixu420-1]
+skipping: [bixu420-2] => (item=fwd) 
+skipping: [bixu420-2] => (item=ptr) 
+skipping: [bixu420-2]
+ok: [bixu420-3] => (item=fwd)
+ok: [bixu420-3] => (item=ptr)
+
+TASK [bind : BIND9 and prometheus-bind-exporter service] ***********************
+ok: [bixu420-3] => (item=bind9)
+ok: [bixu420-1] => (item=bind9)
+ok: [bixu420-2] => (item=bind9)
+ok: [bixu420-3] => (item=prometheus-bind-exporter)
+ok: [bixu420-1] => (item=prometheus-bind-exporter)
+ok: [bixu420-2] => (item=prometheus-bind-exporter)
+
+TASK [bind : meta] *************************************************************
+
+TASK [bind : meta] *************************************************************
+
+TASK [bind : meta] *************************************************************
+
+TASK [bind : Ensure backup A record exists via dynamic update] *****************
+skipping: [bixu420-1]
+skipping: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [bind : Ensure DNS server CNAMEs exist] ***********************************
+skipping: [bixu420-1] => (item=None) 
+skipping: [bixu420-1] => (item=None) 
+skipping: [bixu420-1] => (item=None) 
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-1]
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2]
+ok: [bixu420-3] => (item=None)
+ok: [bixu420-3] => (item=None)
+ok: [bixu420-3] => (item=None)
+ok: [bixu420-3]
+
+TASK [dns : Stop systemd-resolved] *********************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [dns : Deploy resolv.conf] ************************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+ok: [bixu420-3]
+
+PLAY [dns] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [dns : Stop systemd-resolved] *********************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [dns : Deploy resolv.conf] ************************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+PLAY [mysql install] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Install mysql-server] ********************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Install PyMySQL library] *****************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Deploy mysql config] *********************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Flush handlers] **************************************************
+
+TASK [mysql : Flush handlers] **************************************************
+
+TASK [mysql : mysql service] ***************************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [mysql : MySQL user] ******************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : MySQL backup user] ***********************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : MySQL replication user] ******************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : MySQL database] **************************************************
+skipping: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [mysql : Deploy backup MySQL client credentials] **************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : MySQL exporter user] *********************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : install msql-exporter] *******************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Deploy mysqld_exporter config] ***********************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [mysql : Deploy exporter config override] *********************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : mysql service] ***************************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [mysql : Ensure backup parent directory exists] ***************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Ensure backup directory exists] **********************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Deploy cron tab for MySQL backups] *******************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Set MySQL read-only mode dynamically] ****************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Ensure MySQL CNAMEs exist] ***************************************
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2]
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-1]
+
+PLAY [agama install] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [docker : install docker] *************************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [docker : ensure docker service is enabled and started] *******************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [docker : Install a loki plugin] ******************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [agama : Create AGAMA directory] ******************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [agama : Download AGAMA application] **************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [agama : Download AGAMA Dockerfile] ***************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [agama : Build agama Docker image] ****************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [agama : Run multiple agama containers] ***********************************
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-1]
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-2]
+
+TASK [agama : Ensure Agama web CNAMEs exist] ***********************************
+skipping: [bixu420-1] => (item=bixu420-2) 
+skipping: [bixu420-1] => (item=bixu420-1) 
+skipping: [bixu420-1]
+ok: [bixu420-2] => (item=bixu420-2)
+ok: [bixu420-2] => (item=bixu420-1)
+
+PLAY [haproxy install] *********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [haproxy : Install haproxy] ***********************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [haproxy : Deploy haproxy config] *****************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [haproxy : Start and enable haproxy service] ******************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [haproxy : Install prometheus-haproxy-exporter] ***************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [haproxy : Configure haproxy exporter scrape URI] *************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [haproxy : Start and enable haproxy exporter service] *********************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [haproxy : Ensure HAProxy CNAMEs exist] ***********************************
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-2]
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-1]
+
+PLAY [keepalived install] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [keepalived : Install keepalived] *****************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Create keepalived_script user] ******************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [keepalived : Deploy health check script] *********************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [keepalived : Deploy keepalived config] ***********************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Enable script_security in keepalived] ***********************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Start and enable keepalived service] ************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Download and extract keepalived exporter] *******************
+skipping: [bixu420-2]
+skipping: [bixu420-1]
+
+TASK [keepalived : Install keepalived exporter] ********************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [keepalived : Deploy keepalived exporter service unit] ********************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Start and enable keepalived exporter] ***********************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+PLAY [prometheus install] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-3]
+
+TASK [prometheus : Install Prometheus packages] ********************************
+ok: [bixu420-3]
+
+TASK [prometheus : enable prometheus] ******************************************
+ok: [bixu420-3]
+
+TASK [prometheus : Deploy prometheus.yml] **************************************
+ok: [bixu420-3]
+
+TASK [prometheus : Deploy /etc/default/prometheus with external URL] ***********
+ok: [bixu420-3]
+
+TASK [prometheus : Ensure Prometheus data directory exists] ********************
+ok: [bixu420-3]
+
+TASK [prometheus : Ensure Prometheus snapshot directory exists] ****************
+ok: [bixu420-3]
+
+TASK [prometheus : Deploy cron tab for Prometheus snapshots and backups] *******
+ok: [bixu420-3]
+
+TASK [prometheus : Ensure Prometheus CNAME exists] *****************************
+ok: [bixu420-3]
+
+TASK [nginx : Install nginx] ***************************************************
+ok: [bixu420-3]
+
+TASK [nginx : install nginx exporter] ******************************************
+ok: [bixu420-3]
+
+TASK [nginx : Deploy nginx config] *********************************************
+ok: [bixu420-3]
+
+TASK [nginx : Deploy nginx default site config] ********************************
+ok: [bixu420-3]
+
+TASK [nginx : nginx service] ***************************************************
+ok: [bixu420-3]
+
+PLAY [loki install] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-3]
+
+TASK [docker : install docker] *************************************************
+ok: [bixu420-3]
+
+TASK [docker : ensure docker service is enabled and started] *******************
+ok: [bixu420-3]
+
+TASK [docker : Install a loki plugin] ******************************************
+ok: [bixu420-3]
+
+TASK [loki : Install Loki] *****************************************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure loki group exists] *****************************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure loki user exists] ******************************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure loki system user  exists] **********************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure backup directory exists] ***********************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure Loki data directory exists] ********************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure Loki config directory exists] ******************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure Loki backup directory exists] ******************************
+ok: [bixu420-3]
+
+TASK [loki : Deploy Loki configuration] ****************************************
+ok: [bixu420-3]
+
+TASK [loki : Enable and start Loki service] ************************************
+ok: [bixu420-3]
+
+TASK [loki : Deploy cron tab for Loki backups] *********************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure Loki CNAME exists] *****************************************
+ok: [bixu420-3]
+
+PLAY [grafana install] *********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-3]
+
+TASK [docker : install docker] *************************************************
+ok: [bixu420-3]
+
+TASK [docker : ensure docker service is enabled and started] *******************
+ok: [bixu420-3]
+
+TASK [docker : Install a loki plugin] ******************************************
+ok: [bixu420-3]
+
+TASK [grafana : Create grafana provisioning directories] ***********************
+ok: [bixu420-3] => (item=dashboards)
+ok: [bixu420-3] => (item=datasources)
+
+TASK [grafana : deploy grafana config] *****************************************
+ok: [bixu420-3]
+
+TASK [grafana : Datasource provisioning] ***************************************
+ok: [bixu420-3]
+
+TASK [grafana : Dashboards provisioning] ***************************************
+ok: [bixu420-3]
+
+TASK [grafana : Deploy dashboard files] ****************************************
+ok: [bixu420-3] => (item=main.json)
+ok: [bixu420-3] => (item=agama.json)
+ok: [bixu420-3] => (item=mysql.json)
+ok: [bixu420-3] => (item=backups.json)
+
+TASK [grafana : Deploy grafana container] **************************************
+ok: [bixu420-3]
+
+TASK [grafana : meta] **********************************************************
+
+TASK [grafana : Ensure Grafana CNAME exists] ***********************************
+ok: [bixu420-3]
+
+TASK [nginx : Install nginx] ***************************************************
+ok: [bixu420-3]
+
+TASK [nginx : install nginx exporter] ******************************************
+ok: [bixu420-3]
+
+TASK [nginx : Deploy nginx config] *********************************************
+ok: [bixu420-3]
+
+TASK [nginx : Deploy nginx default site config] ********************************
+ok: [bixu420-3]
+
+TASK [nginx : nginx service] ***************************************************
+ok: [bixu420-3]
+
+PLAY RECAP *********************************************************************
+bixu420-1                  : ok=81   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+bixu420-2                  : ok=80   changed=0    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
+bixu420-3                  : ok=83   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
++ ansible all -b -m reboot -a test_command=uptime
+bixu420-1 | CHANGED => {
+    "changed": true,
+    "elapsed": 84,
+    "rebooted": true
+}
+bixu420-2 | CHANGED => {
+    "changed": true,
+    "elapsed": 85,
+    "rebooted": true
+}
+bixu420-3 | CHANGED => {
+    "changed": true,
+    "elapsed": 85,
+    "rebooted": true
+}
++ sleep 15
++ ansible-playbook infra.yaml --diff
+[WARNING]: While constructing a mapping from
+/home/bixu/ica0002/roles/mysql/tasks/main.yaml, line 52, column 3, found a
+duplicate dict key (notify). Using last defined value only.
+[WARNING]: While constructing a mapping from
+/home/bixu/ica0002/roles/mysql/tasks/main.yaml, line 132, column 3, found a
+duplicate dict key (notify). Using last defined value only.
+
+PLAY [Initial setup] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Platform linux on host bixu420-3 is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host bixu420-1 is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host bixu420-2 is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Update APT cache] *************************************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Install prometheus node exporter] *********************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Enable prometheus] ************************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Make directory for apt key] ***************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+ok: [bixu420-3]
+
+TASK [init : Add Grafana key] **************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Add Grafana repository] *******************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : promtail] *********************************************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Ensure Promtail is installed] *************************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Ensure promtail system group exists] ******************************
+ok: [bixu420-2]
+ok: [bixu420-3]
+ok: [bixu420-1]
+
+TASK [init : Ensure promtail system user exists] *******************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Ensure Promtail data directory exists (persistent)] ***************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Ensure Promtail config is up to date] *****************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Ensure promtail user has needed permissions] **********************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Ensure Promtail service is running] *******************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [init : Ensure backup user exists (or update if present)] *****************
+[WARNING]: Found existing ssh key private file "/home/backup/.ssh/id_rsa", no
+force, so skipping ssh-keygen generation
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Ensure backup directory exists for backup user] *******************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Ensure .ssh directory exists for backup user] *********************
+ok: [bixu420-2]
+ok: [bixu420-1]
+ok: [bixu420-3]
+
+TASK [init : Deploy known_hosts file for backup user] **************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : ensure restore directory exists] **********************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Install duplicity] ************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Install python3-gnupg] ********************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [init : Install python3-boto3] ********************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [init : Install python3-pymysql] ******************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+PLAY [bind] ********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [bind : Install BIND9] ****************************************************
+ok: [bixu420-3]
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [bind : Install dnspython] ************************************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [bind : Deploy named.conf.options template] *******************************
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-3] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-1]
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-2]
+ok: [bixu420-3] => (item=None)
+ok: [bixu420-3]
+
+TASK [bind : Run Zone template] ************************************************
+skipping: [bixu420-1] => (item=fwd) 
+skipping: [bixu420-1] => (item=ptr) 
+skipping: [bixu420-2] => (item=fwd) 
+skipping: [bixu420-1]
+skipping: [bixu420-2] => (item=ptr) 
+skipping: [bixu420-2]
+ok: [bixu420-3] => (item=fwd)
+ok: [bixu420-3] => (item=ptr)
+
+TASK [bind : BIND9 and prometheus-bind-exporter service] ***********************
+ok: [bixu420-1] => (item=bind9)
+ok: [bixu420-2] => (item=bind9)
+ok: [bixu420-3] => (item=bind9)
+ok: [bixu420-1] => (item=prometheus-bind-exporter)
+ok: [bixu420-3] => (item=prometheus-bind-exporter)
+ok: [bixu420-2] => (item=prometheus-bind-exporter)
+
+TASK [bind : meta] *************************************************************
+
+TASK [bind : meta] *************************************************************
+
+TASK [bind : meta] *************************************************************
+
+TASK [bind : Ensure backup A record exists via dynamic update] *****************
+skipping: [bixu420-1]
+skipping: [bixu420-2]
+ok: [bixu420-3]
+
+TASK [bind : Ensure DNS server CNAMEs exist] ***********************************
+skipping: [bixu420-1] => (item=None) 
+skipping: [bixu420-1] => (item=None) 
+skipping: [bixu420-1] => (item=None) 
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-1]
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2]
+ok: [bixu420-3] => (item=None)
+ok: [bixu420-3] => (item=None)
+ok: [bixu420-3] => (item=None)
+ok: [bixu420-3]
+
+TASK [dns : Stop systemd-resolved] *********************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [dns : Deploy resolv.conf] ************************************************
+ok: [bixu420-3]
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+PLAY [dns] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [dns : Stop systemd-resolved] *********************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+TASK [dns : Deploy resolv.conf] ************************************************
+ok: [bixu420-1]
+ok: [bixu420-3]
+ok: [bixu420-2]
+
+PLAY [mysql install] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Install mysql-server] ********************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Install PyMySQL library] *****************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Deploy mysql config] *********************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Flush handlers] **************************************************
+
+TASK [mysql : Flush handlers] **************************************************
+
+TASK [mysql : mysql service] ***************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : MySQL user] ******************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : MySQL backup user] ***********************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : MySQL replication user] ******************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : MySQL database] **************************************************
+skipping: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [mysql : Deploy backup MySQL client credentials] **************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : MySQL exporter user] *********************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : install msql-exporter] *******************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Deploy mysqld_exporter config] ***********************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Deploy exporter config override] *********************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [mysql : mysql service] ***************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Ensure backup parent directory exists] ***************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Ensure backup directory exists] **********************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Deploy cron tab for MySQL backups] *******************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Set MySQL read-only mode dynamically] ****************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [mysql : Ensure MySQL CNAMEs exist] ***************************************
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2] => (item=None) 
+skipping: [bixu420-2]
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-1]
+
+PLAY [agama install] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [docker : install docker] *************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [docker : ensure docker service is enabled and started] *******************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [docker : Install a loki plugin] ******************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [agama : Create AGAMA directory] ******************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [agama : Download AGAMA application] **************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [agama : Download AGAMA Dockerfile] ***************************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [agama : Build agama Docker image] ****************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [agama : Run multiple agama containers] ***********************************
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-1]
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-2]
+
+TASK [agama : Ensure Agama web CNAMEs exist] ***********************************
+skipping: [bixu420-1] => (item=bixu420-2) 
+skipping: [bixu420-1] => (item=bixu420-1) 
+skipping: [bixu420-1]
+ok: [bixu420-2] => (item=bixu420-2)
+ok: [bixu420-2] => (item=bixu420-1)
+
+PLAY [haproxy install] *********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [haproxy : Install haproxy] ***********************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [haproxy : Deploy haproxy config] *****************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [haproxy : Start and enable haproxy service] ******************************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [haproxy : Install prometheus-haproxy-exporter] ***************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [haproxy : Configure haproxy exporter scrape URI] *************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [haproxy : Start and enable haproxy exporter service] *********************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [haproxy : Ensure HAProxy CNAMEs exist] ***********************************
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-1] => (item=None)
+ok: [bixu420-1]
+ok: [bixu420-2] => (item=None)
+ok: [bixu420-2]
+
+PLAY [keepalived install] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Install keepalived] *****************************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Create keepalived_script user] ******************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Deploy health check script] *********************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Deploy keepalived config] ***********************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Enable script_security in keepalived] ***********************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [keepalived : Start and enable keepalived service] ************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Download and extract keepalived exporter] *******************
+skipping: [bixu420-2]
+skipping: [bixu420-1]
+
+TASK [keepalived : Install keepalived exporter] ********************************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+TASK [keepalived : Deploy keepalived exporter service unit] ********************
+ok: [bixu420-2]
+ok: [bixu420-1]
+
+TASK [keepalived : Start and enable keepalived exporter] ***********************
+ok: [bixu420-1]
+ok: [bixu420-2]
+
+PLAY [prometheus install] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-3]
+
+TASK [prometheus : Install Prometheus packages] ********************************
+ok: [bixu420-3]
+
+TASK [prometheus : enable prometheus] ******************************************
+ok: [bixu420-3]
+
+TASK [prometheus : Deploy prometheus.yml] **************************************
+ok: [bixu420-3]
+
+TASK [prometheus : Deploy /etc/default/prometheus with external URL] ***********
+ok: [bixu420-3]
+
+TASK [prometheus : Ensure Prometheus data directory exists] ********************
+ok: [bixu420-3]
+
+TASK [prometheus : Ensure Prometheus snapshot directory exists] ****************
+ok: [bixu420-3]
+
+TASK [prometheus : Deploy cron tab for Prometheus snapshots and backups] *******
+ok: [bixu420-3]
+
+TASK [prometheus : Ensure Prometheus CNAME exists] *****************************
+ok: [bixu420-3]
+
+TASK [nginx : Install nginx] ***************************************************
+ok: [bixu420-3]
+
+TASK [nginx : install nginx exporter] ******************************************
+ok: [bixu420-3]
+
+TASK [nginx : Deploy nginx config] *********************************************
+ok: [bixu420-3]
+
+TASK [nginx : Deploy nginx default site config] ********************************
+ok: [bixu420-3]
+
+TASK [nginx : nginx service] ***************************************************
+ok: [bixu420-3]
+
+PLAY [loki install] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-3]
+
+TASK [docker : install docker] *************************************************
+ok: [bixu420-3]
+
+TASK [docker : ensure docker service is enabled and started] *******************
+ok: [bixu420-3]
+
+TASK [docker : Install a loki plugin] ******************************************
+ok: [bixu420-3]
+
+TASK [loki : Install Loki] *****************************************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure loki group exists] *****************************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure loki user exists] ******************************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure loki system user  exists] **********************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure backup directory exists] ***********************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure Loki data directory exists] ********************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure Loki config directory exists] ******************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure Loki backup directory exists] ******************************
+ok: [bixu420-3]
+
+TASK [loki : Deploy Loki configuration] ****************************************
+ok: [bixu420-3]
+
+TASK [loki : Enable and start Loki service] ************************************
+ok: [bixu420-3]
+
+TASK [loki : Deploy cron tab for Loki backups] *********************************
+ok: [bixu420-3]
+
+TASK [loki : Ensure Loki CNAME exists] *****************************************
+ok: [bixu420-3]
+
+PLAY [grafana install] *********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [bixu420-3]
+
+TASK [docker : install docker] *************************************************
+ok: [bixu420-3]
+
+TASK [docker : ensure docker service is enabled and started] *******************
+ok: [bixu420-3]
+
+TASK [docker : Install a loki plugin] ******************************************
+ok: [bixu420-3]
+
+TASK [grafana : Create grafana provisioning directories] ***********************
+ok: [bixu420-3] => (item=dashboards)
+ok: [bixu420-3] => (item=datasources)
+
+TASK [grafana : deploy grafana config] *****************************************
+ok: [bixu420-3]
+
+TASK [grafana : Datasource provisioning] ***************************************
+ok: [bixu420-3]
+
+TASK [grafana : Dashboards provisioning] ***************************************
+ok: [bixu420-3]
+
+TASK [grafana : Deploy dashboard files] ****************************************
+ok: [bixu420-3] => (item=main.json)
+ok: [bixu420-3] => (item=agama.json)
+ok: [bixu420-3] => (item=mysql.json)
+ok: [bixu420-3] => (item=backups.json)
+
+TASK [grafana : Deploy grafana container] **************************************
+ok: [bixu420-3]
+
+TASK [grafana : meta] **********************************************************
+
+TASK [grafana : Ensure Grafana CNAME exists] ***********************************
+ok: [bixu420-3]
+
+TASK [nginx : Install nginx] ***************************************************
+ok: [bixu420-3]
+
+TASK [nginx : install nginx exporter] ******************************************
+ok: [bixu420-3]
+
+TASK [nginx : Deploy nginx config] *********************************************
+ok: [bixu420-3]
+
+TASK [nginx : Deploy nginx default site config] ********************************
+ok: [bixu420-3]
+
+TASK [nginx : nginx service] ***************************************************
+ok: [bixu420-3]
+
+PLAY RECAP *********************************************************************
+bixu420-1                  : ok=81   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+bixu420-2                  : ok=80   changed=0    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
+bixu420-3                  : ok=83   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
++ date
+Mon Dec 15 13:41:37 UTC 2025

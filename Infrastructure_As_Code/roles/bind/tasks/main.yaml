@@ -1,0 +1,79 @@
+
+- name: Install BIND9
+  ansible.builtin.apt:
+    name:
+     - bind9
+     - prometheus-bind-exporter
+    state: present
+
+- name: Install dnspython
+  ansible.builtin.apt:
+    name: python3-dnspython
+    state: present
+
+- name: Deploy named.conf.options template
+  no_log: true
+  ansible.builtin.template:
+    src: named.conf.{{ item }}.j2
+    dest: /etc/bind/named.conf.{{ item }}
+  notify: Restart bind9
+  loop:
+    - options
+    - local
+
+- name: Run Zone template
+  ansible.builtin.template:
+    src: db_{{ item }}.j2
+    dest: /var/cache/bind/db.{{ item }}
+    force: false
+  notify: Restart bind9
+  when: inventory_hostname in groups['dns_primary']
+  loop:
+    - fwd
+    - ptr
+
+- name: BIND9 and prometheus-bind-exporter service
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - bind9
+    - prometheus-bind-exporter
+
+- meta: flush_handlers
+
+- name: Ensure backup A record exists via dynamic update
+  no_log: true
+  community.general.nsupdate:
+    
+    server: "{{ ansible_default_ipv4.address }}"
+    zone: "{{ domain }}"
+    record: "{{ backup_dns_record | default('backup') }}"
+    type: A
+    value: "{{ backup_server_ip }}"
+    key_name: "nsupdate.key"
+    key_secret: "{{ dns_update_key }}"
+    key_algorithm: hmac-sha256
+    state: present
+  when: inventory_hostname in groups['dns_primary']
+
+- name: Ensure DNS server CNAMEs exist
+  no_log: true
+  community.general.nsupdate:
+    server: "{{ ansible_default_ipv4.address }}"
+    zone: "{{ domain }}"
+    record: "{{ service_cnames.dns_prefix }}-{{ idx }}"
+    type: CNAME
+    value: "{{ item }}.{{ domain }}."
+    key_name: "{{ nsupdate_key_name }}"
+    key_secret: "{{ dns_update_key }}"
+    key_algorithm: hmac-sha256
+    state: present
+  loop: "{{ groups['dns_server'] }}"
+  loop_control:
+    index_var: idx0
+    label: "{{ item }}"
+  vars:
+    idx: "{{ idx0 + 1 }}"
+  when: inventory_hostname in groups['dns_primary']

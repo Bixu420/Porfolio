@@ -1,0 +1,11 @@
+- name: Restart keepalived
+  ansible.builtin.service:
+    name: keepalived
+    state: restarted
+    enabled: true
+
+- name: Restart keepalived exporter
+  ansible.builtin.systemd_service:
+    name: prometheus-keepalived-exporter
+    state: restarted
+    daemon_reload: true

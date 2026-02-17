@@ -1,0 +1,33 @@
+---
+# Ensure system user exists
+- name: Ensure agama user exists
+  ansible.builtin.user:
+    name: agama
+    shell: /usr/sbin/nologin
+    state: present
+- name: /opt/agama directory 
+  ansible.builtin.file:
+    path: /opt/agama
+    state: directory
+    owner: agama
+    group: agama
+    mode: '0755'
+
+# Install dependencies (APT packages)
+- name: Install AGAMA dependencies
+  ansible.builtin.apt:
+    name:
+      - python3-flask-sqlalchemy
+      - python3-pymysql 
+    state: present
+    update_cache: yes
+
+- name: Download AGAMA application
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/hudolejev/agama/main/agama.py
+    dest: /opt/agama/agama.py
+    mode: '0644'
+    owner: agama
+    group: agama
+
+

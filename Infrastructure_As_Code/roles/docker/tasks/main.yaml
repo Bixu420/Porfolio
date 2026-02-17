@@ -1,0 +1,16 @@
+- name: install docker
+  ansible.builtin.apt:
+    name: docker.io
+    state: present
+
+- name: ensure docker service is enabled and started
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Install a loki plugin
+  community.docker.docker_plugin:
+    plugin_name: grafana/loki-docker-driver:latest
+    state: enable
+

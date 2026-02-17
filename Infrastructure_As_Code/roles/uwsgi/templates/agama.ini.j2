@@ -1,0 +1,19 @@
+[uwsgi]
+chdir = /opt/agama
+wsgi-file = /opt/agama/agama.py
+callable = app
+
+plugins = python3
+
+uid = agama
+gid = agama
+
+master = true
+processes = 2
+
+socket = localhost:5000
+
+vacuum = true
+die-on-term = true
+
+env = AGAMA_DATABASE_URI=mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_db_cname }}/{{ mysql_database }}

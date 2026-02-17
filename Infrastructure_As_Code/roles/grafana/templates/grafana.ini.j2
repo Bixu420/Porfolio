@@ -1,0 +1,12 @@
+[server]
+root_url = http://{{ service_cnames.grafana }}.{{ domain }}/grafana
+serve_from_sub_path = true
+[security]
+admin_user = {{ grafana_user }}
+admin_password = {{ grafana_password }}
+[feature_toggles]
+provisioning = true
+[auth.anonymous]
+enabled = true
+org_name = Main Org.
+org_role = Viewer

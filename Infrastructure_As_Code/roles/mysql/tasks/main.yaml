@@ -1,0 +1,159 @@
+- name: Install mysql-server
+  ansible.builtin.apt:
+    name: mysql-server
+- name: Install PyMySQL library
+  ansible.builtin.apt:
+    name: python3-pymysql
+    state: present
+
+- name: Deploy mysql config
+  ansible.builtin.template:
+    src: override.cnf.j2
+    dest: /etc/mysql/mysql.conf.d/override.cnf
+    owner: root
+    group: mysql
+    mode: '0644'
+  notify: Restart mysql
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: mysql service
+  ansible.builtin.service:
+    name: mysql
+    state: started
+    enabled: true
+- name: MySQL user
+  community.mysql.mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    host: "%"
+    priv: "{{ mysql_database }}.*:ALL"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
+- name: MySQL backup user
+  community.mysql.mysql_user:
+    name: "{{ mysql_backup_user }}"
+    password: "{{ mysql_backup_password }}"
+    host: "localhost"
+    priv: "{{ mysql_database }}.*:LOCK TABLES,SELECT"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
+- name: MySQL replication user
+  community.mysql.mysql_user:
+    name: "{{ mysql_rep_user }}"
+    password: "{{ mysql_rep_pass }}"
+    host: "%"
+    priv: "*.*:REPLICATION SLAVE"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
+
+
+- name: MySQL database
+  community.mysql.mysql_db:
+    name: "{{ mysql_database }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  when: inventory_hostname == groups['db_primary'][0]
+  notify: Reset MySQL source
+  notify: Reset MySQL replica
+- name: Deploy backup MySQL client credentials
+  ansible.builtin.template:
+    src: backup_my.cnf.j2
+    dest: /home/backup/.my.cnf
+    owner: backup
+    group: backup
+    mode: '0400'
+  no_log: true
+- name: MySQL exporter user
+  community.mysql.mysql_user:
+    name: "{{ mysql_exporter_user }}"
+    password: "{{ mysql_exporter_password }}"
+    host: "localhost"
+    priv: "*.*:REPLICATION CLIENT,LOCK TABLES,SELECT"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
+
+
+- name: install msql-exporter
+  ansible.builtin.apt:
+    name: prometheus-mysqld-exporter
+    state: present
+    policy_rc_d: 101
+
+- name: Deploy mysqld_exporter config
+  ansible.builtin.template:
+    src: mysqld_exporter.cnf.j2
+    dest: /var/lib/prometheus/.my.cnf
+    owner: prometheus
+    group: prometheus
+    mode: '0400'
+  notify: Restart exporter
+  no_log: true
+
+- name: Deploy exporter config override
+  ansible.builtin.template:
+    src: mysqld_exporter.override.j2
+    dest: /etc/default/prometheus-mysqld-exporter
+    owner: root
+    group: prometheus
+    mode: '0640'
+  notify: Restart exporter
+  no_log: true
+- name: mysql service
+  ansible.builtin.service:
+    name: prometheus-mysqld-exporter
+    state: started
+    enabled: true
+- name: Ensure backup parent directory exists
+  file:
+    path: /home/backup
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0700'
+
+- name: Ensure backup directory exists
+  file:
+    path: /home/backup/mysql
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0750'
+
+- name: Deploy cron tab for MySQL backups
+  ansible.builtin.template:
+    src: backup-cron.j2
+    dest: /etc/cron.d/mysql-backup
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart cron
+
+- name: Set MySQL read-only mode dynamically
+  community.mysql.mysql_variables:
+    variable: read_only
+    value: "{{ 'OFF' if inventory_hostname == groups['db_primary'][0] else 'ON' }}"
+    mode: persist
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  notify: Reset MySQL source
+  notify: Reset MySQL replica
+
+- name: Ensure MySQL CNAMEs exist
+  no_log: true
+  community.general.nsupdate:
+    server: "{{ dns_primary_ip }}"
+    zone: "{{ domain }}"
+    record: "{{ service_cnames.db_prefix }}-{{ idx }}"
+    type: CNAME
+    value: "{{ item }}.{{ domain }}."
+    key_name: "{{ nsupdate_key_name }}"
+    key_secret: "{{ dns_update_key }}"
+    key_algorithm: hmac-sha256
+    state: present
+  loop: "{{ groups['db_servers'] }}"
+  loop_control:
+    index_var: idx0
+    label: "{{ item }}"
+  vars:
+    idx: "{{ idx0 + 1 }}"
+  when: inventory_hostname == groups['db_servers'][0]

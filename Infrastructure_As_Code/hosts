@@ -1,0 +1,32 @@
+bixu420-1 ansible_host=193.40.157.25 ansible_port=40722 ansible_user=ubuntu
+bixu420-2 ansible_host=193.40.157.25 ansible_port=39322 ansible_user=ubuntu
+bixu420-3 ansible_host=193.40.157.25 ansible_port=27122 ansible_user=ubuntu
+[db_servers]
+bixu420-1
+bixu420-2
+[dns_primary]
+bixu420-3
+[dns_secondary]
+bixu420-1
+bixu420-2
+[dns_server]
+bixu420-1
+bixu420-2
+bixu420-3
+[web_servers]
+bixu420-2
+bixu420-1
+[all]
+bixu420-1
+bixu420-2
+bixu420-3
+[prometheus]
+bixu420-3 
+[grafana]
+bixu420-3
+[loki_server]
+bixu420-3
+[db_primary]
+bixu420-1
+[db_secondary]
+bixu420-2

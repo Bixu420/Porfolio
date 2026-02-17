@@ -1,0 +1,71 @@
+---
+  - name: Initial setup
+    hosts: all
+    roles:
+      - init
+    tags:
+      - init
+      - docker
+  - name: bind
+    hosts: all
+    roles:
+      - bind
+      - dns
+    tags: 
+      - dns
+  - name: dns
+    hosts: all
+    roles:
+      - dns
+  - name: mysql install 
+    hosts: db_servers
+    roles:
+      - mysql
+    tags:
+      - db
+      - switchover
+  - name: agama install
+    hosts: web_servers
+    roles:
+      - docker
+      - agama
+    tags:
+      - web
+      - switchover
+  - name: haproxy install
+    hosts: web_servers
+    roles:
+      - haproxy
+    tags:
+      - haproxy
+      - web
+  - name: keepalived install
+    hosts: web_servers
+    roles:
+      - keepalived
+    tags:
+      - keepalived
+      - web
+  - name: prometheus install
+    hosts: prometheus
+    roles:
+      - prometheus
+      - nginx
+    tags:
+      - prometheus
+  - name: loki install
+    hosts: loki_server
+    roles:
+      - docker
+      - loki
+    tags:
+      - loki
+  - name: grafana install
+    hosts: grafana
+    roles:
+      - docker
+      - grafana
+      - nginx
+    tags:
+      - grafana
+      - dg

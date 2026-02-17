@@ -1,0 +1,24 @@
+key "transfer.key" {
+    algorithm hmac-sha256;
+    secret "{{ dns_transfer_key }}";
+};
+key "nsupdate.key" {
+    algorithm hmac-sha256;
+    secret "{{ dns_update_key }}";
+};
+options {
+    directory "/var/cache/bind";
+    forwarders {
+{% for ip in dnsforwarders %}
+        {{ ip }};
+{% endfor %}
+    };
+    allow-query { {{ lan }}; {{ localhost }}; {{ docker_net }}; };
+    recursion yes;
+    auth-nxdomain no;   
+    listen-on { any; };
+};
+
+statistics-channels {
+  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};

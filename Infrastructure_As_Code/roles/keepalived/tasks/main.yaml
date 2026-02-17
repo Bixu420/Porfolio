@@ -1,0 +1,78 @@
+- name: Install keepalived
+  ansible.builtin.apt:
+    name: keepalived
+    state: present
+
+- name: Create keepalived_script user
+  ansible.builtin.user:
+    name: keepalived_script
+    system: true
+    shell: /usr/sbin/nologin
+    create_home: true
+    home: /home/keepalived_script
+
+- name: Deploy health check script
+  ansible.builtin.copy:
+    src: check_haproxy.sh
+    dest: /home/keepalived_script/check_haproxy.sh
+    owner: keepalived_script
+    group: keepalived_script
+    mode: '0744'
+
+- name: Deploy keepalived config
+  no_log : true
+  ansible.builtin.template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: '0640'
+  notify: Restart keepalived
+
+- name: Enable script_security in keepalived
+  ansible.builtin.lineinfile:
+    path: /etc/default/keepalived
+    regexp: '^DAEMON_ARGS='
+    line: 'DAEMON_ARGS="--log-console --log-detail --dump-conf"'
+    create: true
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Start and enable keepalived service
+  ansible.builtin.service:
+    name: keepalived
+    state: started
+    enabled: true
+
+- name: Download and extract keepalived exporter
+  ansible.builtin.unarchive:
+    src: https://github.com/mehdy/keepalived-exporter/releases/download/v1.7.0/keepalived-exporter_1.7.0_linux_amd64.tar.gz
+    dest: /opt
+    remote_src: true
+    creates: /opt/keepalived-exporter
+
+- name: Install keepalived exporter
+  ansible.builtin.copy:
+    src: /opt/keepalived-exporter
+    dest: /usr/local/bin/prometheus-keepalived-exporter
+    owner: root
+    group: root
+    mode: '0755'
+    remote_src: true
+
+- name: Deploy keepalived exporter service unit
+  ansible.builtin.template:
+    src: prometheus-keepalived-exporter.service.j2
+    dest: /etc/systemd/system/prometheus-keepalived-exporter.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart keepalived exporter
+
+- name: Start and enable keepalived exporter
+  ansible.builtin.systemd_service:
+    name: prometheus-keepalived-exporter
+    state: started
+    enabled: true
+    daemon_reload: true

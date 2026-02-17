@@ -1,0 +1,71 @@
+
+- name: Install grafana
+  ansible.builtin.apt:
+    name: grafana
+    state: present
+    policy_rc_d : 101
+  
+- name: Deploy grafana config
+  ansible.builtin.template:
+    src: grapfana.ini.j2
+    dest: /etc/grafana/grafana.ini
+    owner: grafana
+    group: grafana
+    mode: '0640'
+  no_log: true
+- name: create dashboards folder
+  ansible.builtin.file:
+    path: /var/lib/grafana/dashboards
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: '0755'
+- name: Datasource provisioning
+  ansible.builtin.copy:
+    src: main.yaml
+    dest: /etc/grafana/provisioning/datasources/main.yaml
+    owner: grafana
+    group: grafana
+    mode: '0640'
+- name: Dashboards provisioning
+  ansible.builtin.copy:
+    src: dashboard.yaml
+    dest: /etc/grafana/provisioning/dashboards/dashboard.yaml
+    owner: grafana
+    group: grafana
+    mode: '0640'  
+- name: Deploy main dashboard
+  ansible.builtin.copy:
+    src: main.json
+    dest: /var/lib/grafana/dashboards/main.json
+    owner: grafana
+    group: grafana
+    mode: '0640'
+- name: Deploy agama dashboard
+  ansible.builtin.copy:
+    src: agama.json
+    dest: /var/lib/grafana/dashboards/agama.json
+    owner: grafana
+    group: grafana
+    mode: '0640'
+- name: Deploy mysql dashboard
+  ansible.builtin.copy:
+    src: mysql.json
+    dest: /var/lib/grafana/dashboards/mysql.json
+    owner: grafana
+    group: grafana
+    mode: '0640'
+- name: Deploy backup dashboard
+  ansible.builtin.copy:
+    src: backups.json
+    dest: /var/lib/grafana/dashboards/backups.json
+    owner: grafana
+    group: grafana
+    mode: '0640'
+
+  notify: Restart grafana
+- name: grafana service
+  ansible.builtin.service:
+    name: grafana-server
+    state: started
+    enabled: true 

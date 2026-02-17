@@ -1,0 +1,70 @@
+
+- name: Create grafana provisioning directories
+  ansible.builtin.file:
+    path: "/opt/grafana/provisioning/{{ item }}"
+    state: directory
+  loop:
+    - dashboards
+    - datasources
+
+- name: deploy grafana config
+  ansible.builtin.template:
+    src: grafana.ini.j2
+    dest: /opt/grafana/grafana.ini
+    owner: 472
+  no_log: true
+  notify: Restart grafana
+
+- name: Datasource provisioning
+  ansible.builtin.template:
+    src: main.yaml.j2
+    dest: /opt/grafana/provisioning/datasources/default.yaml
+  notify: Restart grafana
+
+- name: Dashboards provisioning
+  ansible.builtin.copy:
+    src: dashboard.yaml
+    dest: /opt/grafana/provisioning/dashboards/default.yaml
+  notify: Restart grafana
+
+- name: Deploy dashboard files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/opt/grafana/provisioning/dashboards/{{ item }}"
+  loop:
+    - main.json
+    - agama.json
+    - mysql.json
+    - backups.json
+  notify: Restart grafana
+
+
+- name: Deploy grafana container
+  ansible.builtin.docker_container:
+    name: grafana
+    image: grafana/grafana
+    state: started
+    published_ports:
+      - "{{grafana_port}}:3000"
+    log_driver: grafana/loki-docker-driver
+    restart_policy: unless-stopped
+    log_options:
+      loki-url: "http://{{ service_cnames.loki }}.{{ domain }}:3100/loki/api/v1/push"
+    volumes:
+      - /opt/grafana:/etc/grafana
+  
+- meta: flush_handlers
+
+- name: Ensure Grafana CNAME exists
+  no_log: true
+  community.general.nsupdate:
+    server: "{{ dns_primary_ip }}"
+    zone: "{{ domain }}"
+    record: "{{ service_cnames.grafana }}"
+    type: CNAME
+    value: "{{ inventory_hostname }}.{{ domain }}."
+    key_name: "{{ nsupdate_key_name }}"
+    key_secret: "{{ dns_update_key }}"
+    key_algorithm: hmac-sha256
+    state: present
+  when: inventory_hostname == groups['grafana'][0]

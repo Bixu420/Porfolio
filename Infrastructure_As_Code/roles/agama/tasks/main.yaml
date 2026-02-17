@@ -1,0 +1,56 @@
+- name: Create AGAMA directory
+  ansible.builtin.file:
+    path: /opt/agama
+    state: directory
+
+- name: Download AGAMA application
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/hudolejev/agama/main/agama.py
+    dest: /opt/agama/agama.py
+
+- name: Download AGAMA Dockerfile
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/hudolejev/agama/main/Dockerfile
+    dest: /opt/agama/Dockerfile
+
+- name: Build agama Docker image
+  community.docker.docker_image:
+    name: agama
+    source: build
+    build:
+      path: /opt/agama
+    push: false
+
+- name: Run multiple agama containers
+  no_log: true
+  community.docker.docker_container:
+    name: "agama-{{ item }}"
+    image: agama
+    published_ports:
+      - "{{ 8000 + item }}:8000"
+    log_driver: grafana/loki-docker-driver
+    log_options:
+      loki-url: "http://{{ service_cnames.loki }}.{{ domain }}:3100/loki/api/v1/push"
+    restart_policy: unless-stopped
+    env:
+      AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_db_cname }}/{{ mysql_database }}"
+  loop: "{{ range(1, containers + 1) | list }}"
+
+- name: Ensure Agama web CNAMEs exist
+  community.general.nsupdate:
+    server: "{{ dns_primary_ip }}"
+    zone: "{{ domain }}"
+    record: "{{ service_cnames.web_prefix }}-{{ idx }}"
+    type: CNAME
+    value: "{{ item }}.{{ domain }}."
+    key_name: "{{ nsupdate_key_name }}"
+    key_secret: "{{ dns_update_key }}"
+    key_algorithm: hmac-sha256
+    state: present
+  loop: "{{ groups['web_servers'] }}"
+  loop_control:
+    index_var: idx0
+    label: "{{ item }}"
+  vars:
+    idx: "{{ idx0 + 1 }}"
+  when: inventory_hostname == groups['web_servers'][0]

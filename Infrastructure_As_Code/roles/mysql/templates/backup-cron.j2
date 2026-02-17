@@ -1,0 +1,11 @@
+{% if inventory_hostname == mysql_backup_host %}
+0 17 * * * backup mysqldump agama > /home/backup/mysql/agama.sql
+
+# Duplicity backups (rsync backend)
+5 17 * * 0 backup duplicity --allow-source-mismatch --no-encryption full /home/backup/mysql/ rsync://Bixu420@backup.{{ domain }}/mysql
+
+5 17 * * 1-6  backup  duplicity --allow-source-mismatch --no-encryption incremental /home/backup/mysql/ rsync://Bixu420@backup.{{ domain }}/mysql
+
+15 17 * * 0 backup duplicity --allow-source-mismatch remove-older-than 2W --no-encryption --force rsync://Bixu420@backup.{{ domain }}/mysql
+{% endif %}
+

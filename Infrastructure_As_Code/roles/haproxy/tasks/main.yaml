@@ -1,0 +1,61 @@
+- name: Install haproxy
+  ansible.builtin.apt:
+    name: haproxy
+    state: present
+
+- name: Deploy haproxy config
+  ansible.builtin.template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart haproxy
+
+- name: Start and enable haproxy service
+  ansible.builtin.service:
+    name: haproxy
+    state: started
+    enabled: true
+
+- name: Install prometheus-haproxy-exporter
+  ansible.builtin.apt:
+    name: prometheus-haproxy-exporter
+    state: present
+
+- name: Configure haproxy exporter scrape URI
+  ansible.builtin.lineinfile:
+    path: /etc/default/prometheus-haproxy-exporter
+    regexp: '^ARGS='
+    line: 'ARGS="--haproxy.scrape-uri=http://127.0.0.1:9188/stats?stats;csv"'
+    create: true
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart haproxy exporter
+
+- name: Start and enable haproxy exporter service
+  ansible.builtin.service:
+    name: prometheus-haproxy-exporter
+    state: started
+    enabled: true
+
+- name: Ensure HAProxy CNAMEs exist
+  no_log: true
+  community.general.nsupdate:
+    server: "{{ dns_primary_ip }}"
+    zone: "{{ domain }}"
+    record: "{{ service_cnames.haproxy_prefix }}-{{ idx }}"
+    type: CNAME
+    value: "{{ item }}.{{ domain }}."
+    key_name: "{{ nsupdate_key_name }}"
+    key_secret: "{{ dns_update_key }}"
+    key_algorithm: hmac-sha256
+    state: present
+  loop: "{{ groups['all'] }}"
+  loop_control:
+    index_var: idx0
+    label: "{{ item }}"
+  vars:
+    idx: "{{ idx0 + 1 }}"
+  when: inventory_hostname in groups['web_servers']

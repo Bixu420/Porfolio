@@ -1,0 +1,75 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    metrics_path: /prometheus/metrics
+    static_configs:
+      - targets: ['localhost:9090']
+
+{% for job in prometheus_jobs %}
+{% if job == 'linux' and groups['all'] | length > 0 %}
+  - job_name: 'linux'
+    static_configs:
+      - targets:
+{% for host in groups['all'] %}
+          - {{ host }}.{{ domain }}:9100
+{% endfor %}
+{% elif job == 'promtail' and groups['all'] | length > 0 %}
+  - job_name: 'promtail'
+    static_configs:
+      - targets:
+{% for host in groups['all'] %}
+          - {{ host }}.{{ domain }}:9080
+{% endfor %}
+
+{% elif job == 'loki' and 'loki_server' in groups and groups['loki_server'] | length > 0 %}
+  - job_name: 'loki'
+    static_configs:
+      - targets:
+          - {{ service_cnames.loki }}.{{ domain }}:3100
+{% elif job == 'bind9' and 'dns_server' in groups and groups['dns_server'] | length > 0 %}
+  - job_name: 'bind9'
+    static_configs:
+      - targets:
+{% for host in groups['dns_server'] %}
+          - {{ service_cnames.dns_prefix }}-{{ loop.index }}.{{ domain }}:9119
+{% endfor %}
+
+{% elif job == 'mysql' and 'db_servers' in groups and groups['db_servers'] | length > 0 %}
+  - job_name: 'mysql'
+    static_configs:
+      - targets:
+{% for host in groups['db_servers'] %}
+          - {{ service_cnames.db_prefix }}-{{ loop.index }}.{{ domain }}:9104
+{% endfor %}
+
+{% elif job == 'nginx' and groups['all'] | length > 0 %}
+  - job_name: 'nginx'
+    static_configs:
+      - targets:
+{% for host in groups['all'] %}
+          - {{ host }}.{{ domain }}:9113
+{% endfor %}
+
+{% elif job == 'haproxy' and groups['all'] | length > 0 %}
+  - job_name: 'haproxy'
+    static_configs:
+      - targets:
+{% for host in groups['all'] %}
+          - {{ service_cnames.haproxy_prefix }}-{{ loop.index }}.{{ domain }}:9101
+{% endfor %}
+
+{% elif job == 'keepalived' and groups['all'] | length > 0 %}
+  - job_name: 'keepalived'
+    static_configs:
+      - targets:
+{% for host in groups['all'] %}
+          - {{ host }}.{{ domain }}:9165
+{% endfor %}
+
+{% endif %}
+{% endfor %}
+  - job_name: 'backup'
+    static_configs:
+      - targets: ['backup.{{ domain }}:9111']

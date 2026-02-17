@@ -1,0 +1,47 @@
+{% if inventory_hostname in groups['dns_primary'] %}
+zone "{{ domain }}" {
+    type primary;
+    file "/var/cache/bind/db.fwd";
+    allow-update { key "nsupdate.key"; };
+    allow-transfer { localhost; key "transfer.key"; };
+};
+{% endif %}
+
+{% if inventory_hostname in groups['dns_secondary'] %}
+zone "{{ domain }}" {
+    type secondary;
+    allow-transfer { localhost;};
+    file "/var/cache/bind/db.fwd";
+    primaries {
+{% for vm in groups['dns_primary'] %}
+        {{ hostvars[vm]['ansible_default_ipv4']['address'] }};
+{% endfor %}
+    };
+};
+{% endif %}
+{% if inventory_hostname in groups['dns_secondary'] %}
+server {{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }} {
+    keys { "transfer.key"; };
+};
+{% endif %}
+{% if inventory_hostname in groups['dns_primary'] %}
+zone "168.192.in-addr.arpa" {
+    type primary;
+    file "/var/cache/bind/db.ptr";
+    allow-update { key "nsupdate.key"; };
+    allow-transfer { localhost; key "transfer.key"; };
+};
+{% endif %}
+
+{% if inventory_hostname in groups['dns_secondary'] %}
+zone "168.192.in-addr.arpa" {
+    type secondary;
+    allow-transfer { localhost;};
+    file "/var/cache/bind/db.ptr";
+    primaries {
+{% for vm in groups['dns_primary'] %}
+        {{ hostvars[vm]['ansible_default_ipv4']['address'] }};
+{% endfor %}
+    };
+};
+{% endif %}

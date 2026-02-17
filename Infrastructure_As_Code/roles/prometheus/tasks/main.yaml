@@ -1,0 +1,63 @@
+- name: Install Prometheus packages
+  ansible.builtin.apt:
+    name:
+      - prometheus
+      - curl
+    state: present
+- name: enable prometheus
+  ansible.builtin.service:
+    name: prometheus
+    state: started
+    enabled: true
+- name: Deploy prometheus.yml
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+    owner: prometheus
+    group: prometheus
+    mode: '0640'
+  notify: Restart prometheus
+- name: Deploy /etc/default/prometheus with external URL
+  ansible.builtin.template:
+    src: prometheus.default.j2
+    dest: /etc/default/prometheus
+    owner: prometheus
+    group: prometheus 
+    mode: '0640'
+  notify: Restart prometheus
+- name: Ensure Prometheus data directory exists
+  ansible.builtin.file:
+    path: /var/lib/prometheus/metrics2
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+- name: Ensure Prometheus snapshot directory exists
+  ansible.builtin.file:
+    path: /var/lib/prometheus/metrics2/snapshots
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+- name: Deploy cron tab for Prometheus snapshots and backups
+  ansible.builtin.template:
+    src: backup-cron.j2
+    dest: /etc/cron.d/prometheus-backup
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart cron
+
+- name: Ensure Prometheus CNAME exists
+  no_log: true
+  community.general.nsupdate:
+    server: "{{ dns_primary_ip }}"
+    zone: "{{ domain }}"
+    record: "{{ service_cnames.prometheus }}"
+    type: CNAME
+    value: "{{ inventory_hostname }}.{{ domain }}."
+    key_name: "{{ nsupdate_key_name }}"
+    key_secret: "{{ dns_update_key }}"
+    key_algorithm: hmac-sha256
+    state: present
+  when: inventory_hostname == groups['prometheus'][0]

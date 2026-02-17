@@ -1,0 +1,28 @@
+---
+# 1. Install uWSGI and plugin
+- name: Install uWSGI packages
+  ansible.builtin.apt:
+    name:
+      - uwsgi
+      - uwsgi-plugin-python3
+    state: present
+
+# 2.  AGAMA uWSGI configuration
+- name: Deploy uWSGI configuration for AGAMA
+  ansible.builtin.template:
+    src: agama.ini.j2
+    dest: /etc/uwsgi/apps-enabled/agama.ini
+    owner: root
+    group: root
+    mode: '0640'
+  no_log: true
+  notify: Restart uWSGI
+  
+- name: check uWSGI service
+  ansible.builtin.service:
+    name: uwsgi
+    state: started
+    enabled: true
+
+- name: Ensure uWSGI is restarted to load config
+  ansible.builtin.meta: flush_handlers

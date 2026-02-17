@@ -1,0 +1,13 @@
+
+LOG_FILE=/home/backup/loki-backup.log
+
+# Full Loki backup every Sunday night
+45 14 * * 0 root  rsync -a --delete /tmp/loki/ /home/backup/loki/ && chown -R backup:backup /home/backup/loki && chmod -R u+rwX,g+rX /home/backup/loki
+
+
+0 15 * * 0 backup duplicity --allow-source-mismatch --no-encryption full /home/backup/loki/ rsync://Bixu420@backup.{{ domain }}/loki
+
+0 15 * * 1-6  backup  duplicity --allow-source-mismatch --no-encryption incremental /home/backup/loki/ rsync://Bixu420@backup.{{ domain }}/loki
+
+15 15 * * 0 backup duplicity --allow-source-mismatch remove-older-than 2W --no-encryption --force rsync://Bixu420@backup.{{ domain }}/loki
+

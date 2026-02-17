@@ -1,0 +1,8 @@
+- name: Restart loki
+  ansible.builtin.service:
+    name: loki
+    state: restarted
+- name: Restart cron
+  ansible.builtin.service:
+    name: cron
+    state: restarted

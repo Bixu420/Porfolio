@@ -1,0 +1,17 @@
+# Memory consumption for each VM Bytes
+node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes
+
+# Memory consumption percentage for each VM
+100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes))
+
+# Average CPU load (1 minute) for each VM
+node_load1
+
+# Average CPU load (5 minutes) for each VM
+node_load5
+
+# Average CPU load (15 minutes) for each VM
+node_load15
+
+# CPU usage percentage (average over 5 minutes)
+100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)

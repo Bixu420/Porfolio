@@ -1,0 +1,35 @@
+---
+- name: Install nginx
+  ansible.builtin.apt:
+    name: nginx
+- name: install nginx exporter
+  ansible.builtin.apt:
+    name: prometheus-nginx-exporter
+    state: present
+- name: Deploy nginx config
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart nginx
+- name: Deploy nginx default site config
+  ansible.builtin.template:
+    src: default.j2
+    dest: /etc/nginx/sites-enabled/default
+    owner: www-data
+    mode: '0640'
+  notify: Restart nginx
+- name: nginx service
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+- name: nginx exporter service
+  ansible.builtin.service:
+    name: prometheus-nginx-exporter
+    state: started
+    enabled: true
+
+

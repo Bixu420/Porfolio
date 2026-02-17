@@ -1,0 +1,66 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+# Persist Promtail positions across reboots
+positions:
+  filename: /var/lib/promtail/positions.yaml
+
+clients:
+  - url: http://{{ service_cnames.loki }}.{{ domain }}:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: system-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: syslog
+          hostname: {{ inventory_hostname }}
+          __path__: /var/log/syslog
+
+{% if inventory_hostname in groups['web_servers'] %}
+  - job_name: agama
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: agama
+          hostname: {{ inventory_hostname }}
+          __path__: /var/log/uwsgi/app/agama.log
+
+  - job_name: nginx-agama
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: nginx-agama
+          hostname: {{ inventory_hostname }}
+          __path__: /var/log/nginx/agama.log
+{% endif %}
+
+  - job_name: nginx-access
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: nginx-access
+          hostname: {{ inventory_hostname }}
+          __path__: /var/log/nginx/access.log
+
+  - job_name: nginx-error
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: nginx-error
+          hostname: {{ inventory_hostname }}
+          __path__: /var/log/nginx/error.log
+
+  - job_name: syslog
+    syslog:
+      listen_address: 0.0.0.0:8814
+      listen_protocol: tcp
+      labels:
+        job: haproxy
+        hostname: {{ inventory_hostname }}

@@ -1,0 +1,17 @@
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+SNAPSHOT_URL=http://localhost:9090/prometheus/api/v1/admin/tsdb/snapshot
+SNAPSHOT_DIR=/var/lib/prometheus/metrics2/snapshots/
+BACKUP_REMOTE=rsync://Bixu420@backup.{{ domain }}/prometheus
+LOG_FILE=/home/backup/prometheus-backup.log
+
+# Trigger Prometheus snapshot and push full backup every Sunday
+45 14 * * 0 backup curl -sf -XPOST "$SNAPSHOT_URL" >> "$LOG_FILE" 2>&1 && duplicity --allow-source-mismatch --no-encryption full "$SNAPSHOT_DIR" "$BACKUP_REMOTE" >> "$LOG_FILE" 2>&1
+
+# Trigger Prometheus snapshot and push incremental backups Monday-Saturday
+0 15 * * 1-6 backup curl -sf -XPOST "$SNAPSHOT_URL" >> "$LOG_FILE" 2>&1 && duplicity --allow-source-mismatch --no-encryption incremental "$SNAPSHOT_DIR" "$BACKUP_REMOTE" >> "$LOG_FILE" 2>&1
+
+10 15 * * 0 backup rm -rf "$SNAPSHOT_DIR"*
+
+20 15 * * 0 backup duplicity --allow-source-mismatch remove-older-than 2W --no-encryption --force "$BACKUP_REMOTE" >> "$LOG_FILE" 2>&1
+
