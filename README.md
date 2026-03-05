@@ -24,7 +24,7 @@ Focus:
 - Logging & observability
 - Infrastructure automation
 
-Repo: [https://github.com/Bixu420/Portfolio/Infrastructure_As_Code](RepoLink)
+Repo: [Infrastructure_As_Code](https://github.com/Bixu420/Portfolio/Infrastructure_As_Code)
 
 ---
 
